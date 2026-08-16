@@ -213,37 +213,6 @@ function displayDomain() {
     return origin;
 }
 
-
-// Send data to Node.js server
-async function sendVisitorDetails() {
-    try {
-
-        const Viewer = await getUserDetails();
-        /*if (displayDomain() === "https://yasershaikh327.github.io" || displayDomain() === "https://my-port-folio-seven-inky.vercel.app") {*/
-        const response = await fetch('https://localhost:44359/api/visitor/', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-            body: JSON.stringify(Viewer)
-            });
-
-            // IMPORTANT: check if response is OK before parsing JSON
-            if (!response.ok) {
-                throw new Error(`Server error: ${response.status}`);
-            }
-
-            const result = await response.json();
-            console.log('Server Response:', result);
-        /*} else {
-            console.log("Running Locally On System " + new Date().toLocaleString());
-        }*/
-
-    } catch (error) {
-        console.error('Error sending visitor details:', error);
-    }
-}
-
 function OpenIframe(id) {
     // Set iframe src dynamically
     document.getElementById("myIframe").src = "project-screenshots-iframe/" + id;
