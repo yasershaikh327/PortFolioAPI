@@ -27,23 +27,7 @@ namespace PortFolioAPI.Controllers
             {
                 // Process visitor details here
                 var totalRecords = _repository.Add(viewerDto);
-                    await _iNotificationService.SendNotification($@"
-                    👀 Someone visited your Portfolio
-                    Real-time visitor alert
-
-                    Location
-                    📍 {viewerDto.city}, {viewerDto.country_name}
-
-                    Visit Time
-                    🕐 {viewerDto.visit_time}
-
-                    Browser
-                    🌐 {viewerDto.browser}
-
-                    OS
-                    💻 {viewerDto.operating_system}
-                ");
-
+                await _iNotificationService.SendNotification($"👀 Visitor Alert: Location 📍 {viewerDto.city}, {viewerDto.country_name}; Time 🕐 {viewerDto.visit_time}; Browser 🌐 {viewerDto.browser}; OS 💻 {viewerDto.operating_system}");
                 return Ok(new { status = "Visitor details received", totalRecords = totalRecords });
             }
             catch (Exception ex)
