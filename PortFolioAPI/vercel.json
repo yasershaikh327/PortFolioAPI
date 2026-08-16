@@ -1,15 +1,18 @@
 {
-	"builds": [
-		{
-			"src": "Dockerfile.vercel",
-			"use": "@vercel/docker"
+	"$schema": "https://openapi.vercel.sh/vercel.json",
+	"services": {
+		"api": {
+			"root": ".",
+			"entrypoint": "Dockerfile.vercel",
+			"runtime": "container"
 		}
-	],
-	"routes": [
+	},
+	"rewrites": [
 		{
-			"src": "/(.*)",
-			"dest": "PortFolioAPI/$1"
+			"source": "/(.*)",
+			"destination": {
+				"service": "api"
+			}
 		}
 	]
 }
- 
