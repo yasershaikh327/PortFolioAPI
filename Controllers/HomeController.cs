@@ -8,7 +8,7 @@ namespace PortFolioAPI.Controllers
     {
         public IActionResult Index()
         {
-            return Json(new { message = "Hello from MVC on Vercel" });
+            return View();
         }
 
         public IActionResult Health()
