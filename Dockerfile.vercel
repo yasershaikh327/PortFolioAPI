@@ -2,13 +2,19 @@
 FROM mcr.microsoft.com/dotnet/sdk:10.0 AS build
 WORKDIR /src
 
-# Copy the project file and restore dependencies
-COPY PortFolioAPI.csproj ./
-RUN dotnet restore PortFolioAPI.csproj
+# Copy solution and project files first
+COPY PortFolioAPI.sln ./
+COPY PortFolioAPI/PortFolioAPI.csproj PortFolioAPI/
+COPY DataAccess/DataAccess.csproj DataAccess/
+
+# Restore dependencies
+RUN dotnet restore PortFolioAPI.sln
 
 # Copy the rest of the source code
 COPY . .
-RUN dotnet publish -c Release -o /app/publish
+
+# Publish
+RUN dotnet publish PortFolioAPI/PortFolioAPI.csproj -c Release -o /app/publish
 
 # Runtime stage
 FROM mcr.microsoft.com/dotnet/aspnet:10.0 AS final
