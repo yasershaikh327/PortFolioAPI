@@ -3,154 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <title>Dynamic Image Slider</title>
-    <style>
-            .slider {
-                position: relative;
-                max-width: 600px;
-                margin: auto;
-                overflow: hidden;
-                border-radius: 8px;
-            }
-
-            .slides {
-                display: flex;
-                transition: transform 0.5s ease-in-out;
-            }
-
-                .slides img {
-                    flex: 0 0 100%; /* each image takes full width */
-                    width: 100%;
-                    height: auto; /* keep aspect ratio */
-                    border-radius: 8px;
-                }
-
-            .navigation {
-                text-align: center;
-                margin-top: 6px;
-            }
-
-                .navigation button {
-                    border: none;
-                    background: #ccc;
-                    padding: 8px 12px;
-                    margin: 0 5px;
-                    border-radius: 4px;
-                    cursor: pointer;
-                }
-
-                    .navigation button.active {
-                        background: #333;
-                        color: #fff;
-                    }
-
-            .prev, .next {
-                position: absolute;
-                top: 50%;
-                transform: translateY(-50%);
-                background-color: rgba(0,0,0,0.5);
-                color: white;
-                border: none;
-                padding: 10px;
-                cursor: pointer;
-                border-radius: 50%;
-                font-size: 18px;
-                z-index: 10;
-            }
-
-            /* Move them outward */
-            .prev {
-                left: -10px;
-            }
-            /* push left button outside */
-            .next {
-                right: -10px;
-            }
-            /* push right button outside */
-
-    </style>
+    <link href="~/css/popup.css" rel="stylesheet" />
 </head>
-
 <body style="overflow: hidden;">
-
     <div class="slider">
         <button class="prev">&#10094;</button>
         <div class="slides" id="slides"></div>
         <button class="next">&#10095;</button>
     </div>
     <div class="navigation" id="navigation"></div>
-
-    <script>
-            document.addEventListener("DOMContentLoaded", function () {
-                const slides = document.getElementById("slides");
-                const nav = document.getElementById("navigation");
-                let currentIndex = 0;
-
-                function getParameterByName(name) {
-                    const urlParams = new URLSearchParams(window.location.search);
-                    return urlParams.get(name);
-                }
-
-                const idValue = getParameterByName("id");
-                let totalImages = 0;
-
-                // Configure image counts per project
-                if (idValue === "expenses_tracker") {
-                    totalImages = 13;
-                } else if (idValue === "sales_dashboard") {
-                    totalImages = 3;
-                } else if (idValue === "inventory_manager") {
-                    totalImages = 4;
-                }
-
-                if (idValue && totalImages > 0) {
-                    for (let i = 1; i <= totalImages; i++) {
-                        const img = document.createElement("img");
-                        img.src = `project_screenshots/${idValue}/${i}.png`;
-                        img.alt = `${idValue} screenshot ${i}`;
-                        slides.appendChild(img);
-                    }
-
-                    const images = slides.querySelectorAll("img");
-
-                    images.forEach((_, index) => {
-                        const btn = document.createElement("button");
-                        btn.textContent = index + 1;
-                        btn.addEventListener("click", () => showSlide(index));
-                        nav.appendChild(btn);
-                    });
-
-                    function showSlide(index) {
-                        currentIndex = index;
-                        slides.style.transform = `translateX(-${index * 100}%)`;
-                        updateButtons();
-                    }
-
-                    function updateButtons() {
-                        const buttons = nav.querySelectorAll("button");
-                        buttons.forEach((btn, idx) => {
-                            btn.classList.toggle("active", idx === currentIndex);
-                        });
-                    }
-
-                    // ✅ Prev button
-                    document.querySelector(".prev").addEventListener("click", function () {
-                        currentIndex = (currentIndex - 1 + images.length) % images.length;
-                        showSlide(currentIndex);
-                    });
-
-                    // ✅ Next button
-                    document.querySelector(".next").addEventListener("click", function () {
-                        currentIndex = (currentIndex + 1) % images.length;
-                        showSlide(currentIndex);
-                    });
-
-                    // Initialize
-                    showSlide(0);
-                } else {
-                    console.log("No valid ID found in URL or no images configured.");
-                }
-            });
-    </script>
-
+    <script src="~/js/popup.js"></script>
 </body>
 </html>

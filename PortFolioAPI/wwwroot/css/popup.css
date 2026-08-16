@@ -1,0 +1,62 @@
+﻿.slider {
+    position: relative;
+    max-width: 600px;
+    margin: auto;
+    overflow: hidden;
+    border-radius: 8px;
+}
+
+.slides {
+    display: flex;
+    transition: transform 0.5s ease-in-out;
+}
+
+    .slides img {
+        flex: 0 0 100%; /* each image takes full width */
+        width: 100%;
+        height: auto; /* keep aspect ratio */
+        border-radius: 8px;
+    }
+
+.navigation {
+    text-align: center;
+    margin-top: 6px;
+}
+
+    .navigation button {
+        border: none;
+        background: #ccc;
+        padding: 8px 12px;
+        margin: 0 5px;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+
+        .navigation button.active {
+            background: #333;
+            color: #fff;
+        }
+
+.prev, .next {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgba(0,0,0,0.5);
+    color: white;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    border-radius: 50%;
+    font-size: 18px;
+    z-index: 10;
+}
+
+/* Move them outward */
+.prev {
+    left: -10px;
+}
+/* push left button outside */
+.next {
+    right: -10px;
+}
+/* push right button outside */
