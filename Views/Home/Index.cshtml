@@ -1,8 +1,295 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
-}
+﻿<!-- GitHub Pages rebuild -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Yaser Shaikh · Senior Software Engineer</title>
+    <script src="~/js/script.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="~/css/style.css" rel="stylesheet">
+</head>
+<body>
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+    <!-- COMPACT HERO - NO WASTED SPACE -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-badge">✦ SOFTWARE ENGINEER</div>
+                <h1 class="hero-name gradient-cyan">Yaser Shaikh</h1>
+                <p class="hero-tagline">Building resilient systems · Fullstack Architect · R&D</p>
+                <p class="hero-desc">3+ years of professional engineering expertise — .NET Core, cloud-native, scalable APIs, and enterprise-grade platforms. I turn complex requirements into maintainable, production-ready software.</p>
+                <div class="cta-group">
+                    <a href="mailto:syaser327@gmail.com" class="btn-primary">✉ syaser327@gmail.com</a>
+                    <a href="#" class="btn-outline-cyan" onclick="scrollToContact()">Let's talk →</a>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- STATS -->
+    <div class="container">
+        <div class="grid-3">
+            <div class="card"><div class="card-icon">⚙️</div><div class="stat-number">04+</div><div>Years Experience</div></div>
+            <div class="card"><div class="card-icon">📦</div><div class="stat-number">20+</div><div>Personal Projects</div></div>
+            <div class="card"><div class="card-icon">🌍</div><div class="stat-number">Global</div><div>Remote / Relocation</div></div>
+        </div>
+    </div>
+
+    <!-- ABOUT -->
+    <div class="container">
+        <h2 class="section-title">About</h2>
+        <div class="about-grid">
+            <div class="about-text">
+                <p>Completed Master's in Computer Application(Goa University) · Fullstack engineer with deep expertise in .NET Core, PHP, React, and cloud infrastructure. I architect systems that scale, from Linen Management ERP to high-traffic booking platforms.</p>
+                <p>Currently leading backend & API development at TDSS, previously at Team Inertia and Zapcom.</p>
+                <div class="info-row">
+                    <div class="info-item"><span>📍 LOCATION</span>Goa, India</div>
+                    <div class="info-item"><span>📧 CONTACT</span>syaser327@gmail.com</div>
+                </div>
+            </div>
+            <div>
+                <div style="background: var(--bg-card); border-radius: 24px; padding: 24px; border: 1px solid var(--border-light);">
+                    <h3 style="margin-bottom: 16px;">Core competencies</h3>
+                    <div>
+                        <span class="skill-pill">.NET Core</span><span class="skill-pill">React.js</span><span class="skill-pill">Node.js</span>
+                        <span class="skill-pill">PHP/Laravel</span><span class="skill-pill">Docker/AWS</span><span class="skill-pill">Clean Arch</span>
+                        <span class="skill-pill">SOLID</span><span class="skill-pill">MySQL/PostgreSQL</span><span class="skill-pill">MongoDB</span>
+                        <span class="skill-pill">Payment Gateways</span><span class="skill-pill">REST APIs</span>
+                    </div>
+                    <div style="display: flex; gap: 32px; margin-top: 24px;">
+                        <div><span class="stat-number">02</span><br><span style="font-size:11px;">DEGREES</span></div>
+                        <div><span class="stat-number">4+</span><br><span style="font-size:11px;">CERTIFICATIONS</span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- TIMELINE -->
+    <!-- EXPERIENCE TIMELINE - COMPLETE & ACCURATE -->
+    <div class="container">
+        <h2 class="section-title">Experience & Education</h2>
+        <div class="timeline">
+
+            <!-- Current Position - TDSS -->
+            <div class="timeline-item">
+                <div class="timeline-year">2026 – Present</div>
+                <div class="timeline-dot-line"><div class="timeline-dot"></div><div class="timeline-line"></div></div>
+                <div class="timeline-content">
+                    <h4>Software Engineer</h4>
+                    <div class="company">TDSS - Software Convergent System · Panaji, Goa</div>
+                    <ul>
+                        <li>Leading development of comprehensive Linen Management System including REST APIs, Admin Panel, Employee Mobile Module, Management Dashboard, and reporting modules</li>
+                        <li>Developing secure REST APIs using .NET Core following Clean Architecture and SOLID principles</li>
+                        <li>Building and maintaining Admin Panel using ASP.NET Web Forms (ASPX) with C# and VB.NET</li>
+                        <li>Designing and optimizing SQL Server queries, stored procedures, and database structures</li>
+                        <li>Working with Entity Framework and Microsoft Azure for deployment and hosting</li>
+                        <li>Performing testing, debugging, code reviews, UI enhancements, and system optimization</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Team Inertia - Software Engineer -->
+            <div class="timeline-item">
+                <div class="timeline-year">2025 – 2026</div>
+                <div class="timeline-dot-line"><div class="timeline-dot"></div><div class="timeline-line"></div></div>
+                <div class="timeline-content">
+                    <h4>Software Engineer</h4>
+                    <div class="company">Team Inertia Technologies · Panaji, Goa</div>
+                    <ul>
+                        <li>Worked on Event Management, College Management, Pharmaceutical, Casino, and Government applications</li>
+                        <li>Developed backend systems using Core PHP and MySQL</li>
+                        <li>Built REST APIs, reports, and dynamic modules with Ajax and jQuery</li>
+                        <li>Integrated HDFC and SBI payment gateways, WhatsApp, SMS, and Email APIs</li>
+                        <li>Deployed applications using Docker, EasyPanel, cPanel, AWS S3, and MinIO</li>
+                        <li>Implemented XSS and SQL Injection protection mechanisms</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Team Inertia - Software Developer -->
+            <div class="timeline-item">
+                <div class="timeline-year">2024 – 2025</div>
+                <div class="timeline-dot-line"><div class="timeline-dot"></div><div class="timeline-line"></div></div>
+                <div class="timeline-content">
+                    <h4>Software Developer</h4>
+                    <div class="company">Team Inertia Technologies · Panaji, Goa</div>
+                    <ul>
+                        <li>Developed and maintained backend systems using Core PHP and MySQL</li>
+                        <li>Built REST APIs and reporting modules</li>
+                        <li>Implemented Ajax and jQuery-based dynamic interfaces</li>
+                        <li>Worked on diverse applications including events, education, and government portals</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Anant Infomedia -->
+            <div class="timeline-item">
+                <div class="timeline-year">2023 – 2024</div>
+                <div class="timeline-dot-line"><div class="timeline-dot"></div><div class="timeline-line"></div></div>
+                <div class="timeline-content">
+                    <h4>Junior Software Engineer</h4>
+                    <div class="company">Anant Infomedia · Panaji, Goa</div>
+                    <ul>
+                        <li>Worked on NHA project with CLM, CRM, and SFA modules</li>
+                        <li>Developed REST APIs using PHP, MySQL, Ajax, and jQuery</li>
+                        <li>Designed complex SQL reports and Excel exports</li>
+                        <li>Integrated WhatsApp API and CSV bulk upload modules</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Zapcom -->
+            <div class="timeline-item">
+                <div class="timeline-year">2023</div>
+                <div class="timeline-dot-line"><div class="timeline-dot"></div><div class="timeline-line"></div></div>
+                <div class="timeline-content">
+                    <h4>.NET Application Developer</h4>
+                    <div class="company">Zapcom Solution Pvt. Ltd. · Bengaluru</div>
+                    <ul>
+                        <li>Developed Lunch Booking Application using .NET Core MVC</li>
+                        <li>Applied SOLID principles and Clean Architecture</li>
+                        <li>Designed UI/UX in Figma and implemented secure authentication</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Education - MCA (2022-2024) -->
+            <div class="timeline-item">
+                <div class="timeline-year">2020 – 2023</div>
+                <div class="timeline-dot-line"><div class="timeline-dot"></div><div class="timeline-line"></div></div>
+                <div class="timeline-content">
+                    <h4>Master of Computer Applications (MCA)</h4>
+                    <div class="company">Goa University, Goa</div>
+                    <ul>
+                        <li>Specialized in Advanced Computing and Software Development</li>
+                        <li>Graduated with excellence in full-stack development</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Education - BCA (2017-2020) -->
+            <div class="timeline-item">
+                <div class="timeline-year">2017 – 2020</div>
+                <div class="timeline-dot-line"><div class="timeline-dot"></div><div class="timeline-line"></div></div>
+                <div class="timeline-content">
+                    <h4>Bachelor of Computer Applications (BCA)</h4>
+                    <div class="company">Don Bosco College, Goa</div>
+                    <ul>
+                        <li>Foundation in computer science and programming</li>
+                        <li>Built strong fundamentals in software engineering</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- HSC -->
+            <div class="timeline-item">
+                <div class="timeline-year">2017</div>
+                <div class="timeline-dot-line"><div class="timeline-dot"></div><div class="timeline-line"></div></div>
+                <div class="timeline-content">
+                    <h4>Higher Secondary Certificate (12th Science)</h4>
+                    <div class="company">Green Valley National School, Goa</div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- PROJECTS -->
+    <div class="container">
+        <h2 class="section-title">Projects</h2>
+        <div class="projects-grid">
+            <div class="project-card"><div class="project-emoji">💰</div><h3>Expenses Tracker</h3><p>Personal finance with spending insights and budget automation.</p><br /><a onclick="OpenIframe('expenses_tracker')" style="font-style: italic;font-family: monospace;cursor:pointer;">Click Here To See Screenshots</a></div>
+            <div class="project-card"><div class="project-emoji">🍱</div><h3>Lunch Booking System</h3><p>.NET Core, Clean Architecture, order tracking.</p></div>
+            <div class="project-card"><div class="project-emoji">🎂</div><h3>Custom Cake Ordering</h3><p>E‑commerce with payment gateway, delivery scheduling.</p></div>
+            <div class="project-card"><div class="project-emoji">🎓</div><h3>Online Learning Platform</h3><p>Course management, video streaming, certificates.</p></div>
+            <div class="project-card"><div class="project-emoji">🚗</div><h3>Vehicle Booking System</h3><p>Real‑time availability, calendar sync, payments.</p></div>
+            <div class="project-card"><div class="project-emoji">🏠</div><h3>RealEstate Booking</h3><p>Property listing, filters, admin dashboard.</p></div>
+        </div>
+    </div>
+
+    <!-- STORIES -->
+    <div class="container">
+        <h2 class="section-title">Insights</h2>
+        <div class="stories-grid">
+            <div class="story-card"><div style="color:var(--cyan);">✦ FEATURED</div><h3 style="margin:10px 0;">Building production-ready systems</h3><p>.NET Core, Docker, cloud patterns.</p></div>
+            <div class="story-card"><div style="color:var(--cyan);">⚡ PERFORMANCE</div><h3 style="margin:10px 0;">SQL optimization: 3min → 8sec</h3><p>Strategic indexing and query refactoring.</p></div>
+            <div class="story-card"><div style="color:var(--cyan);">🔐 SECURITY</div><h3 style="margin:10px 0;">Payment gateways & threat prevention</h3><p>XSS, SQLi, signature verification.</p></div>
+            <div class="story-card"><div style="color:var(--cyan);">☁️ CLOUD</div><h3 style="margin:10px 0;">10GB uploads with S3 & MinIO</h3><p>Multipart uploads, presigned URLs.</p></div>
+        </div>
+    </div>
+
+    <!-- CONTACT + MAP -->
+    <div class="container">
+        <h2 class="section-title">Connect</h2>
+        <div class="contact-duo">
+            <div class="contact-panel">
+                <h3 style="font-size:1.5rem;">Let's collaborate</h3>
+                <p style="margin: 16px 0; color:var(--text-secondary);">Available for freelance, full-time remote, or relocation worldwide.</p>
+                <div class="contact-links">
+                    <a href="mailto:syaser327@gmail.com" class="social-link">📧 syaser327@gmail.com</a>
+                    <a href="https://linkedin.com/in/yaser-shaikh-b0245614a" target="_blank" class="social-link">🔗 LinkedIn</a>
+                    <a href="https://github.com/Yasershaikh327" target="_blank" class="social-link">🐙 GitHub</a>
+                    <a href="Yaser_Shaikh_Net_Resume_June2026.pdf" target="_blank" class="social-link">📝 Resume</a>
+                </div>
+            </div>
+            <div class="contact-panel">
+                <div style="display:flex; align-items:center; gap:8px; margin-bottom:16px;">
+                    <span style="width:10px; height:10px; background:#4ade80; border-radius:50%; box-shadow:0 0 6px #4ade80;"></span>
+                    <span style="font-weight:700;">AVAILABLE WORLDWIDE</span>
+                </div>
+                <!-- Map Container -->
+                <div id="contact-map" style="height: 260px; border-radius: 20px; overflow: hidden; margin-top: 16px;"></div>
+
+                <!-- Country Legend (VISIBLE) -->
+                <div style="display: flex; flex-wrap: wrap; gap: 16px; justify-content: center; margin-top: 18px; padding: 12px 16px; background: var(--bg-elevated); border-radius: 60px;">
+                    <span style="font-size: 13px; font-weight: 700; display: flex; align-items: center; gap: 6px;">
+                        <span style="width: 10px; height: 10px; background: #00d4ff; border-radius: 50%; box-shadow: 0 0 6px #00d4ff;"></span> 🇮🇳 India
+                    </span>
+                    <span style="font-size: 13px; font-weight: 700; display: flex; align-items: center; gap: 6px;">
+                        <span style="width: 10px; height: 10px; background: #00d4ff; border-radius: 50%; box-shadow: 0 0 6px #00d4ff;"></span> 🇦🇪 Middle East
+                    </span>
+                    <span style="font-size: 13px; font-weight: 700; display: flex; align-items: center; gap: 6px;">
+                        <span style="width: 10px; height: 10px; background: #00d4ff; border-radius: 50%; box-shadow: 0 0 6px #00d4ff;"></span> 🇬🇧 United Kingdom
+                    </span>
+                    <span style="font-size: 13px; font-weight: 700; display: flex; align-items: center; gap: 6px;">
+                        <span style="width: 10px; height: 10px; background: #00d4ff; border-radius: 50%; box-shadow: 0 0 6px #00d4ff;"></span> 🇺🇸 North America
+                    </span>
+                </div>
+
+
+                <div style="display:flex; flex-wrap:wrap; gap:12px; justify-content:center; margin-top:16px;">
+                    <span style="font-size:12px; font-weight:600;">🇮🇳 India</span>
+                    <span style="font-size:12px; font-weight:600;">🇦🇪 Middle East</span>
+                    <span style="font-size:12px; font-weight:600;">🇬🇧 UK</span>
+                    <span style="font-size:12px; font-weight:600;">🇺🇸 N. America</span>
+                </div>
+                <p style="margin-top:16px;">📍 Goa, India · ⏱ 24h response</p>
+                <p style="margin-top:16px;" id="liveClock"></p>
+            </div>
+        </div>
+    </div>
+
+    <div id="myModal" class="modal">
+        <div class="modal-content">
+            <!-- Close button -->
+            <span class="close">&times;</span>
+            <iframe id="myIframe" width="100%" height="500" style="border:none;"></iframe>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-links">
+            <a onclick="window.scrollTo({top:0,behavior:'smooth'})">Home</a>
+            <a onclick="document.querySelector('.about-grid').scrollIntoView({behavior:'smooth'})">About</a>
+            <a onclick="document.querySelector('.projects-grid').scrollIntoView({behavior:'smooth'})">Work</a>
+            <a href="https://linkedin.com/in/yaser-shaikh-b0245614a" target="_blank">LinkedIn</a>
+            <a href="https://github.com/Yasershaikh327" target="_blank">GitHub</a>
+            <a href="Yaser_Shaikh_Net_Resume_June2026.pdf" target="_blank">Resume</a>
+        </div>
+        <p>© 2026 Yaser Shaikh — Software Engineer</p>
+    </footer>
+</body>
+</html>

@@ -11,4 +11,7 @@
 	<ItemGroup>
 	  <None Include="vercel.json" />
 	</ItemGroup>
+	<ItemGroup>
+	  <ProjectReference Include="..\DataAccess\DataAccess.csproj" />
+	</ItemGroup>
 </Project>

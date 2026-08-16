@@ -1,3 +1,4 @@
+using DataAccess.Services;
 using Microsoft.AspNetCore.Mvc;
 using System.Net.Http.Headers;
 using System.Text;
@@ -11,27 +12,14 @@ namespace PortFolioAPI.Controllers
             return View();
         }
 
-        public IActionResult Health()
+        public IActionResult Error()
         {
-            return Json(new { status = "ok" });
+            return View();
         }
 
-        [Route("notify")]
-        public async Task<IActionResult> Notify()
+        public IActionResult NotFoundPage()
         {
-            using var client = new HttpClient();
-
-            var message = new StringContent("Good Morning 🌞", Encoding.UTF8);
-            message.Headers.ContentType = new MediaTypeHeaderValue("text/plain");
-
-            var response = await client.PostAsync("https://ntfy.sh/yasershaikhportfoliovisitors327", message);
-            var responseText = await response.Content.ReadAsStringAsync();
-
-            return Json(new
-            {
-                status = response.StatusCode,
-                response = responseText
-            });
+            return View();
         }
     }
 }
