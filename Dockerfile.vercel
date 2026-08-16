@@ -1,0 +1,18 @@
+FROM mcr.microsoft.com/dotnet/sdk:10.0 AS build
+WORKDIR /src
+
+COPY DataAccess/DataAccess.csproj DataAccess/
+COPY PortFolioAPI/PortFolioAPI.csproj PortFolioAPI/
+RUN dotnet restore PortFolioAPI/PortFolioAPI.csproj
+
+COPY DataAccess/ DataAccess/
+COPY PortFolioAPI/ PortFolioAPI/
+
+WORKDIR /src/PortFolioAPI
+RUN dotnet publish -c Release -o /app/publish
+
+FROM mcr.microsoft.com/dotnet/aspnet:10.0 AS runtime
+WORKDIR /app
+COPY --from=build /app/publish .
+
+ENTRYPOINT ["sh", "-c", "ASPNETCORE_URLS=http://+:$PORT dotnet PortFolioAPI.dll"]
