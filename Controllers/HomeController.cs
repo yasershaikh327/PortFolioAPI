@@ -24,7 +24,7 @@ namespace PortFolioAPI.Controllers
             var message = new StringContent("Good Morning 🌞", Encoding.UTF8, "text/plain");
 
             // "mytopic" is any name you choose
-            var response = await client.PostAsync("https://ntfy.sh/mytopic", message);
+            var response = await client.PostAsync("https://ntfy.sh/yasershaikh327topic", message);
 
             return Json(new { status = response.StatusCode });
         }
