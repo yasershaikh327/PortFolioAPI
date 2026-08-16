@@ -38,12 +38,24 @@ builder.Services.AddRateLimiter(options =>
 
 var app = builder.Build();
 
+if (app.Environment.IsDevelopment())
+{
+    app.UseDeveloperExceptionPage();
+}
+else
+{
+    app.UseExceptionHandler("/Error/500"); // unhandled exceptions
+    app.UseStatusCodePagesWithReExecute("/Error/{0}"); // status codes like 404
+}
+
+app.UseHttpsRedirection();
 
 app.UseStaticFiles();
+
 app.UseRouting();
+
 app.UseRateLimiter();
 
-app.UseStatusCodePages();
 
 app.MapControllers().RequireRateLimiting("public-api");
 

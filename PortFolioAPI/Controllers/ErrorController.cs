@@ -1,21 +1,34 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-
-namespace PortFolioAPI.Controllers
+namespace NonSucessHTTPStatusCodeDemo.Controllers
 {
     public class ErrorController : Controller
     {
-        [Route("Home/Error/{code}")]
-        public IActionResult HandleError(int code)
+        // Route to capture any error status code from the URL
+        [Route("Error/{statusCode}")]
+        public IActionResult Index(int statusCode)
         {
-            return code switch
+            // Clear any pre-existing response content
+            Response.Clear();
+
+            // Explicitly set the response status code
+            Response.StatusCode = statusCode;
+
+            // Render the appropriate error view based on the status code
+            switch (statusCode)
             {
-                //404 => View("NotFound"),
-                405 => View("MethodNotAllowed"),
-                429 => View("TooManyRequests"),
-                500 => View("ServerError"),
-                502 => View("BadGateway"),
-                _ => View("GenericError")
-            };
+                case 401:
+                    return View("UnauthorizedError");        // For Unauthorized Access
+                case 403:
+                    return View("ForbiddenError");           // For Forbidden Access 
+                case 404:
+                    return View("PageNotFoundError");        // For Not Found errors
+                case 500:
+                    return View("InternalServerError");      // For Internal Server errors
+                case 503:
+                    return View("ServiceUnavailableError");  // For Service Unavailable 
+                default:
+                    return View("GenericError");             // For any other error codes
+            }
         }
     }
 }

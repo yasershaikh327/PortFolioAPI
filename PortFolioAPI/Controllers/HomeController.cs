@@ -17,14 +17,23 @@ namespace PortFolioAPI.Controllers
             return View();
         }
 
-        public IActionResult NotFoundPage()
-        {
-            return View();
-        }
 
         [HttpGet("/project-screenshots-iframe")]
         public IActionResult ProjectScreenshotsIframe(string id)
         {
+            return View();
+        }
+
+        // Simulate a 404 Not Found error page.
+        public IActionResult NotFoundPage()
+        {
+            // Simulate a scenario where the requested resource does not exist.
+            bool resourceExists = false;
+            if (!resourceExists)
+            {
+                // Returns 404 Not Found to trigger the custom error page.
+                return NotFound();
+            }
             return View();
         }
 
