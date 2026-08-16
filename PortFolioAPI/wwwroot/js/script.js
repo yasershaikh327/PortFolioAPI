@@ -246,7 +246,7 @@ async function sendVisitorDetails() {
 
 function OpenIframe(id) {
     // Set iframe src dynamically
-    document.getElementById("myIframe").src = "project_screenshots_iframe.html?id=" + id;
+    document.getElementById("myIframe").src = "project-screenshots-iframe/" + id;
     // Show modal
     document.getElementById("myModal").style.display = "block";
 }
@@ -267,7 +267,7 @@ window.onclick = function (event) {
 
 function OpenIframe(id) {
     // Set iframe src dynamically
-    document.getElementById("myIframe").src = "project_screenshots_iframe.html?id=" + id;
+    document.getElementById("myIframe").src = "project-screenshots-iframe/" + id;
     // Show modal
     document.getElementById("myModal").style.display = "block";
 }
