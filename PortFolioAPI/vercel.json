@@ -3,14 +3,16 @@
 	"services": {
 		"api": {
 			"root": ".",
-			"entrypoint": "Dockerfile.vercel",
+			"entrypoint": "PortFolioAPI/Dockerfile.vercel",
 			"runtime": "container"
 		}
 	},
 	"rewrites": [
 		{
 			"source": "/(.*)",
-			"destination": { "service": "api" }
+			"destination": {
+				"service": "api"
+			}
 		}
 	]
 }
