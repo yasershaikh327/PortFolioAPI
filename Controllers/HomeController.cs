@@ -8,18 +8,13 @@ namespace PortFolioAPI.Controllers
     {
         public IActionResult Index()
         {
-            return View();
+            return Json(new { message = "Hello from MVC on Vercel" });
         }
 
-        public IActionResult Privacy()
+        public IActionResult Health()
         {
-            return View();
-        }
-
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            return Json(new { status = "ok" });
         }
     }
+
 }
