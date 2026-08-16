@@ -1,4 +1,0 @@
-<Solution>
-  <Project Path="../DataAccess/DataAccess.csproj" />
-  <Project Path="PortFolioAPI.csproj" />
-</Solution>
