@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using System.Net.Http.Headers;
 using System.Text;
 
 namespace PortFolioAPI.Controllers
@@ -20,12 +21,10 @@ namespace PortFolioAPI.Controllers
         {
             using var client = new HttpClient();
 
-            // Explicitly set Content-Type to text/plain
-            var message = new StringContent("Good Morning 🌞", Encoding.UTF8, "text/plain");
-            message.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("text/plain");
+            var message = new StringContent("Good Morning 🌞", Encoding.UTF8);
+            message.Headers.ContentType = new MediaTypeHeaderValue("text/plain");
 
             var response = await client.PostAsync("https://ntfy.sh/yasershaikhportfoliovisitors327", message);
-
             var responseText = await response.Content.ReadAsStringAsync();
 
             return Json(new
