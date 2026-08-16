@@ -11,19 +11,14 @@ FROM mcr.microsoft.com/dotnet/sdk:10.0 AS build
 
 WORKDIR /src
 
-# Copy project files first
 COPY PortFolioAPI/PortFolioAPI.csproj PortFolioAPI/
 COPY DataAccess/DataAccess.csproj DataAccess/
 
-# Restore
 RUN dotnet restore PortFolioAPI/PortFolioAPI.csproj
 
-
-# Copy the complete source
 COPY PortFolioAPI/ PortFolioAPI/
 COPY DataAccess/ DataAccess/
 
-# Build
 WORKDIR /src/PortFolioAPI
 
 RUN dotnet build PortFolioAPI.csproj \
