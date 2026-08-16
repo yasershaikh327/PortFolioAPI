@@ -1,2 +1,6 @@
 ".vercel" 
 ".vercel" 
+.vercel/
+bin/
+obj/
+.vs/
