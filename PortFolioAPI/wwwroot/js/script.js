@@ -215,7 +215,7 @@ function displayDomain() {
 
 function OpenIframe(id) {
     // Set iframe src dynamically
-    document.getElementById("myIframe").src = "project-screenshots-iframe/" + id;
+    document.getElementById("myIframe").src = "project-screenshots-iframe?id=" + id;
     // Show modal
     document.getElementById("myModal").style.display = "block";
 }
@@ -236,7 +236,7 @@ window.onclick = function (event) {
 
 function OpenIframe(id) {
     // Set iframe src dynamically
-    document.getElementById("myIframe").src = "project-screenshots-iframe/" + id;
+    document.getElementById("myIframe").src = "project-screenshots-iframe?id=" + id;
     // Show modal
     document.getElementById("myModal").style.display = "block";
 }
@@ -254,6 +254,3 @@ window.onclick = function (event) {
         document.getElementById("myModal").style.display = "none";
     }
 };
-
-// Call when page loads
-window.addEventListener('load', sendVisitorDetails);
