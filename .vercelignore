@@ -1,0 +1,10 @@
+@"
+.vs
+**/.vs
+bin
+obj
+**/bin
+**/obj
+.git
+.github
+"@ | Set-Content .vercelignore

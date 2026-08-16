@@ -6,7 +6,6 @@ EXPOSE 8080
 ENV ASPNETCORE_URLS=http://0.0.0.0:8080
 ENV ASPNETCORE_ENVIRONMENT=Production
 
-
 FROM mcr.microsoft.com/dotnet/sdk:10.0 AS build
 
 WORKDIR /src
@@ -21,25 +20,12 @@ COPY DataAccess/ DataAccess/
 
 WORKDIR /src/PortFolioAPI
 
-RUN dotnet build PortFolioAPI.csproj \
-    -c Release \
-    --no-restore \
-    -o /app/build
-
-
-FROM build AS publish
-
-RUN dotnet publish PortFolioAPI.csproj \
-    -c Release \
-    --no-restore \
-    -o /app/publish \
-    /p:UseAppHost=false
-
+RUN dotnet publish PortFolioAPI.csproj -c Release --no-restore -o /app/publish /p:UseAppHost=false
 
 FROM base AS final
 
 WORKDIR /app
 
-COPY --from=publish /app/publish .
+COPY --from=build /app/publish .
 
 ENTRYPOINT ["dotnet", "PortFolioAPI.dll"]
