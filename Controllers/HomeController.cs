@@ -1,6 +1,4 @@
 using Microsoft.AspNetCore.Mvc;
-using PortFolioAPI.Models;
-using System.Diagnostics;
 using System.Text;
 
 namespace PortFolioAPI.Controllers
@@ -23,12 +21,10 @@ namespace PortFolioAPI.Controllers
             using var client = new HttpClient();
             var message = new StringContent("Good Morning 🌞", Encoding.UTF8, "text/plain");
 
-            // "mytopic" is any name you choose
+            // Send notification to ntfy public server, topic: yasershaikhportfoliovisitors327
             var response = await client.PostAsync("https://ntfy.sh/yasershaikhportfoliovisitors327", message);
 
             return Json(new { status = response.StatusCode });
         }
-
     }
-
 }
