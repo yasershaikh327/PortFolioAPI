@@ -47,12 +47,6 @@ app.UseStatusCodePages();
 
 app.MapControllers().RequireRateLimiting("public-api");
 
-app.MapGet("/", () => Results.Ok(new
-{
-    status = "OK",
-    message = "PortFolioAPI is running"
-}));
-
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}"
