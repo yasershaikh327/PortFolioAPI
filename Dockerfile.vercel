@@ -1,23 +1,22 @@
 # Build stage
-FROM mcr.microsoft.com/dotnet/sdk:10.0 AS build
+FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 WORKDIR /src
 
-# Copy solution and project files first
-COPY PortFolioAPI.sln ./
+# Copy project files first (for caching)
 COPY PortFolioAPI/PortFolioAPI.csproj PortFolioAPI/
 COPY DataAccess/DataAccess.csproj DataAccess/
 
 # Restore dependencies
-RUN dotnet restore PortFolioAPI.sln
+RUN dotnet restore PortFolioAPI/PortFolioAPI.csproj
 
 # Copy the rest of the source code
 COPY . .
 
-# Publish
+# Publish the API project
 RUN dotnet publish PortFolioAPI/PortFolioAPI.csproj -c Release -o /app/publish
 
 # Runtime stage
-FROM mcr.microsoft.com/dotnet/aspnet:10.0 AS final
+FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS final
 WORKDIR /app
 COPY --from=build /app/publish .
 ENTRYPOINT ["dotnet", "PortFolioAPI.dll"]
