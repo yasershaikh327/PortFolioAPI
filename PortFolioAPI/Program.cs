@@ -3,6 +3,7 @@ using DataAccess.Repositories;
 using DataAccess.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Connections.Features;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.RateLimiting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
@@ -11,6 +12,7 @@ using PortFolioAPI.DataAccess;
 using System.Threading.RateLimiting;
 
 var builder = WebApplication.CreateBuilder(args);
+
 
 // Configure Kestrel to listen on the Vercel port
 var port = Environment.GetEnvironmentVariable("PORT") ?? "80";
@@ -37,16 +39,6 @@ builder.Services.AddRateLimiter(options =>
 });
 
 var app = builder.Build();
-
-if (app.Environment.IsDevelopment())
-{
-    app.UseDeveloperExceptionPage();
-}
-else
-{
-    app.UseExceptionHandler("/Error/404"); // unhandled exceptions
-    app.UseStatusCodePagesWithReExecute("/Error/{0}"); // status codes like 404
-}
 
 app.UseHttpsRedirection();
 

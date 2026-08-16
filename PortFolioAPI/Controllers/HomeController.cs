@@ -25,15 +25,9 @@ namespace PortFolioAPI.Controllers
         }
 
         // Simulate a 404 Not Found error page.
-        public IActionResult NotFoundPage()
+        [HttpGet("/Home/page-not-found-error")]
+        public IActionResult PageNotFoundError()
         {
-            // Simulate a scenario where the requested resource does not exist.
-            bool resourceExists = false;
-            if (!resourceExists)
-            {
-                // Returns 404 Not Found to trigger the custom error page.
-                return NotFound();
-            }
             return View();
         }
 
