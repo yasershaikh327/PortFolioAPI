@@ -44,7 +44,7 @@ if (app.Environment.IsDevelopment())
 }
 else
 {
-    app.UseExceptionHandler("/Error/500"); // unhandled exceptions
+    app.UseExceptionHandler("/Error/404"); // unhandled exceptions
     app.UseStatusCodePagesWithReExecute("/Error/{0}"); // status codes like 404
 }
 
