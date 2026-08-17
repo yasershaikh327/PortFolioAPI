@@ -562,3 +562,17 @@ footer {
         font-size: 2rem;
     }
 }
+
+.text-center {
+    text-align: center;
+}
+
+.cta-group--center {
+    justify-content: center;
+}
+
+.hero-content.text-center .hero-desc {
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+}

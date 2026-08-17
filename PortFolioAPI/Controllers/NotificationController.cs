@@ -1,6 +1,9 @@
-﻿using DataAccess.Services;
+﻿using DataAccess.AppSettings;
+using DataAccess.Helper;
+using DataAccess.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.RateLimiting;
+using Microsoft.Extensions.Options;
 using PortFolioAPI.Models;
 
 namespace PortFolioAPI.Controllers
@@ -11,9 +14,13 @@ namespace PortFolioAPI.Controllers
     public class NotificationController : ControllerBase
     {
         private readonly INotificationService _iNotificationService;
-        public NotificationController(INotificationService notificationService)
+        private readonly AppSettings _settings;
+        private readonly IHelper _helper;
+        public NotificationController(INotificationService notificationService, IOptions<AppSettings> options, IHelper helper)
         {
             _iNotificationService = notificationService;
+            _settings = options.Value;
+            _helper = helper;
         }
 
         [HttpPost]
@@ -27,6 +34,7 @@ namespace PortFolioAPI.Controllers
             }
             catch (Exception ex)
             {
+                _helper.LogError("An error occurred while processing the notification request.", ex);
                 throw new Exception(ex.Message);
             }
         }

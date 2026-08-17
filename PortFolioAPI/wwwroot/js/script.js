@@ -83,8 +83,6 @@ function updateClock() {
 updateClock();
 setInterval(updateClock, 1000);
 
-
-
 function initMap() {
     const mapDiv = document.getElementById('contact-map');
     if (!mapDiv) return;
@@ -254,3 +252,36 @@ window.onclick = function (event) {
         document.getElementById("myModal").style.display = "none";
     }
 };
+
+async function sendVisitorDetails() {
+    try {
+
+        const Viewer = await getUserDetails();
+        const origin = displayDomain();
+        if (origin === "https://yasershaikh327.github.io" ||
+            origin === "https://my-port-folio-seven-inky.vercel.app") {
+            const response = await fetch(origin  + '/api/visitor/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(Viewer)
+            });
+
+            // IMPORTANT: check if response is OK before parsing JSON
+            if (!response.ok) {
+                throw new Error(`Server error: ${response.status}`);
+            }
+
+            const result = await response.json();
+            console.log('Server Response:', result);
+        } else {
+            console.log("Running Locally On System " + new Date().toLocaleString());
+        }
+
+    } catch (error) {
+        console.error('Error sending visitor details:', error);
+    }
+}
+window.addEventListener('load', sendVisitorDetails);
+

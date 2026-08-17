@@ -1,8 +1,11 @@
-﻿using DataAccess.Dto;
+﻿using DataAccess.AppSettings;
+using DataAccess.Dto;
+using DataAccess.Helper;
 using DataAccess.Repositories;
 using DataAccess.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.RateLimiting;
+using Microsoft.Extensions.Options;
 using PortFolioAPI.Models;
 
 namespace PortFolioAPI.Controllers
@@ -14,10 +17,14 @@ namespace PortFolioAPI.Controllers
     {
         private readonly IRepository _repository;
         private readonly INotificationService _iNotificationService;
-        public VisitorController(IRepository repository, INotificationService iNotificationService)
+        private readonly AppSettings _settings;
+        private readonly IHelper _helper;
+        public VisitorController(IRepository repository, INotificationService iNotificationService, IOptions<AppSettings> options, IHelper helper)
         {
             _repository = repository;
             _iNotificationService = iNotificationService;
+            _settings = options.Value;
+            _helper = helper;
         }
 
         [HttpPost]
@@ -25,13 +32,23 @@ namespace PortFolioAPI.Controllers
         {
             try
             {
-                // Process visitor details here
-                var totalRecords = _repository.Add(viewerDto);
-                await _iNotificationService.SendNotification($"👀 Visitor Alert: Location 📍 {viewerDto.city}, {viewerDto.country_name}; Time 🕐 {viewerDto.visit_time}; Browser 🌐 {viewerDto.browser}; OS 💻 {viewerDto.operating_system}");
-                return Ok(new { status = "Visitor details received", totalRecords = totalRecords });
+                if (_settings.ISPROD == "YES")
+                {
+                    if (ModelState.IsValid)
+                    {
+                        var VisitorDate = DateTime.Now;
+                        // Process visitor details here
+                        var totalRecords = _repository.Add(viewerDto);
+                        await _iNotificationService.SendNotification($"👀 Visitor Alert: Location 📍 {viewerDto.city}, {viewerDto.country_name}; Time 🕐 {VisitorDate.ToString("dd/MM/yyyy hh:mm tt")}; Browser 🌐 {viewerDto.browser}; OS 💻 {viewerDto.operating_system}");
+                        return Ok(new { status = "Visitor details received", totalRecords = 0 });
+                    }
+                    return Ok(new { status = "Something Went Wrong" });
+                }
+                return Ok(new { status = "Running on Localhost..." });
             }
             catch (Exception ex)
             {
+                _helper.LogError("An error occurred while processing the visitor request.", ex);
                 return BadRequest(ex.Message);
             }
         }

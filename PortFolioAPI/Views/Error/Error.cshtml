@@ -1,0 +1,37 @@
+﻿@model int
+@{
+    var (title, message) = Model switch
+    {
+        404 => ("Page Not Found", "Sorry, the page you're looking for doesn't exist."),
+        429 => ("Too Many Requests", "You've sent too many requests. Please try again shortly."),
+        503 => ("Service Unavailable", "The service is temporarily unavailable. Please try again later."),
+        _ => ("Something Went Wrong", "An unexpected error occurred. Please try again later.")
+    };
+    ViewData["Title"] = title;
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>@Model · @title</title>
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="~/css/style.css" rel="stylesheet">
+</head>
+<body>
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content text-center">
+                <h1 class="hero-name gradient-cyan">@Model</h1>
+                <p class="hero-tagline">@title</p>
+                <p class="hero-desc">@message</p>
+                <div class="cta-group cta-group--center">
+                    <a href="/" class="btn-primary">← Go back home</a>
+                    <a href="mailto:syaser327@gmail.com" class="btn-outline-cyan">✉ Contact me</a>
+                </div>
+            </div>
+        </div>
+    </section>
+</body>
+</html>

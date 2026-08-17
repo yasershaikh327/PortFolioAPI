@@ -50,8 +50,8 @@ namespace DataAccess.Repositories
                 }
 
                 // Insert into database
-                //_applicationDbContext.viewers_list.Add(viewerList);
-                //_applicationDbContext.SaveChanges();
+                _applicationDbContext.viewers_list.Add(viewerList);
+                _applicationDbContext.SaveChanges();
 
                 // Return total records count
                 var totalRecords = _applicationDbContext.viewers_list.Count();
