@@ -262,8 +262,9 @@ async function sendVisitorDetails() {
             origin === "https://my-port-folio-seven-inky.vercel.app" ||
             origin === "https://port-folio-ebyx11pm0-yaser327s-projects.vercel.app" ||
             origin === "https://port-folio-api-one.vercel.app" ||
-            origin === "https://port-folio-api-git-master-yaser327s-projects.vercel.app/" ||
-            origin === "https://port-folio-qtoc047et-yaser327s-projects.vercel.app/" ||
+            origin === "https://port-folio-api-git-master-yaser327s-projects.vercel.app" ||
+            origin === "https://port-folio-dug0idazq-yaser327s-projects.vercel.app" ||
+            origin === "https://port-folio-qtoc047et-yaser327s-projects.vercel.app" ||
             origin === "https://localhost:44359") {
             const response = await fetch(origin  + '/api/visitor/', {
                 method: 'POST',
