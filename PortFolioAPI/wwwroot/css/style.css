@@ -94,6 +94,20 @@ a:focus-visible, button:focus-visible, .card:focus-visible, .btn-primary:focus-v
     padding: 0 32px;
 }
 
+.container2 {
+    max-width: 1280px;
+    width: 100%; /* responsive scaling */
+    margin: 0 auto; /* horizontal center */
+    padding: 0 32px;
+    box-sizing: border-box;
+    /* Add flexbox for vertical + horizontal centering */
+    display: flex;
+    justify-content: center; /* center content horizontally */
+    align-items: center; /* center content vertically */
+    min-height: 100vh; /* full viewport height */
+}
+
+
 .hero {
     padding: 48px 0 32px;
 }
