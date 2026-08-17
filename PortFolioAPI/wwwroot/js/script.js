@@ -259,7 +259,7 @@ async function sendVisitorDetails() {
         const Viewer = await getUserDetails();
         const origin = displayDomain();
         if (origin === "https://yasershaikh327.github.io" ||
-            origin === "https://my-port-folio-seven-inky.vercel.app") {
+            origin === "https://my-port-folio-seven-inky.vercel.app" || origin === "https://port-folio-ebyx11pm0-yaser327s-projects.vercel.app/") {
             const response = await fetch(origin  + '/api/visitor/', {
                 method: 'POST',
                 headers: {
