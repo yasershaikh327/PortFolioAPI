@@ -31,10 +31,10 @@ string ISPROD = Environment.GetEnvironmentVariable("ISPROD");
 builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseNpgsql(connectionString));
-builder.Services.AddScoped<IHelper, Helper>();
-builder.Services.AddScoped<IMapper, Mapper>();  
-builder.Services.AddScoped<IRepository, Repository>();  
+builder.Services.AddScoped<IMapper, Mapper>();
+builder.Services.AddScoped<IRepository, Repository>();
 builder.Services.AddScoped<INotificationService,NotificationService>();
+builder.Services.AddTransient<IHelper, Helper>();
 builder.Services.Configure<AppSettings>(builder.Configuration);
 
 builder.Services.AddRateLimiter(options =>
