@@ -1,5 +1,6 @@
 ﻿using DataAccess.Dto;
 using DataAccess.Mappers;
+using Microsoft.EntityFrameworkCore;
 using PortFolioAPI.DataAccess;
 using PortFolioAPI.Models;
 using System;
@@ -57,9 +58,46 @@ namespace DataAccess.Repositories
                 var totalRecords = _applicationDbContext.viewers_list.Count();
                 return totalRecords;
             }
+            catch (DbUpdateException ex)
+            {
+                // Log complete EF Core exception
+                /*_logger.LogError(
+                    ex,
+                    "Database error while saving Viewer.");
+
+                // Log the direct inner exception
+                _logger.LogError(
+                    "Inner Exception: {InnerException}",
+                    ex.InnerException?.Message);
+
+                // Log deeper inner exception if available
+                _logger.LogError(
+                    "Base Exception: {BaseException}",
+                    ex.GetBaseException().Message);*/
+
+                // IMPORTANT:
+                // Preserve the original exception and stack trace
+                throw;
+            }
             catch (Exception ex)
             {
-                throw new Exception(ex.Message);
+                /*_logger.LogError(
+                    ex,
+                    "Unexpected error while adding Viewer.");
+
+                _logger.LogError(
+                    "Exception Message: {Message}",
+                    ex.Message);
+
+                _logger.LogError(
+                    "Inner Exception: {InnerException}",
+                    ex.InnerException?.Message);
+
+                _logger.LogError(
+                    "Base Exception: {BaseException}",
+                    ex.GetBaseException().Message);*/
+
+                throw;
             }
         }
 
