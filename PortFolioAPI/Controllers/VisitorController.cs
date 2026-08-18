@@ -49,7 +49,7 @@ namespace PortFolioAPI.Controllers
             catch (Exception ex)
             {
                 _helper.LogError("An error occurred while processing the visitor request.", ex);
-                return BadRequest(ex.Message);
+                return Ok(new { status = ex.Message });
             }
         }
     }
