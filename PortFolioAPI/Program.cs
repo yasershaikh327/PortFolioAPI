@@ -43,7 +43,7 @@ builder.Services.AddRateLimiter(options =>
 
     options.AddSlidingWindowLimiter("public-api", opt =>
     {
-        opt.PermitLimit = 10;
+        opt.PermitLimit = 5;
         opt.Window = TimeSpan.FromMinutes(1);
         opt.SegmentsPerWindow = 6;
         opt.QueueLimit = 0;
