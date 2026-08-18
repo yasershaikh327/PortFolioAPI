@@ -49,9 +49,16 @@ namespace PortFolioAPI.Controllers
             }
             catch (DbUpdateException ex)
             {
-                _helper.LogError("An error occurred while processing the visitor request.", ex);
-                return Ok(new { DatabaseStatus = ex.Message });
-            }
+                var innerMessage = ex.InnerException?.Message;
+                var deeperMessage = ex.InnerException?.InnerException?.Message;
+
+                _helper.LogError("Visitor request failed.", ex);
+
+                return Ok(new
+                {
+                    DatabaseStatus = $"{ex.Message} | Inner: {innerMessage} | Deeper: {deeperMessage}"
+                });
+             }
             catch (Exception ex)
             {
                 _helper.LogError("An error occurred while processing the visitor request.", ex);
