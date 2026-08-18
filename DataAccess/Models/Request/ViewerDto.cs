@@ -13,36 +13,44 @@ namespace PortFolioAPI.Models
         public int id { get; set; }
 
         [Required, StringLength(10)]
-        [RegularExpression(@"^[A-Z]{2}$", ErrorMessage = "Invalid country code")]
+        [RegularExpression(@"^[A-Z]{2}$", ErrorMessage = "Invalid country code (use 2 uppercase letters)")]
         public string country_code { get; set; }
 
         [Required, StringLength(100)]
+        [RegularExpression(@"^[A-Za-z\s]+$", ErrorMessage = "Invalid country name (letters only)")]
         public string country_name { get; set; }
 
         [Required, StringLength(100)]
+        [RegularExpression(@"^[A-Za-z\s]+$", ErrorMessage = "Invalid city name (letters only)")]
         public string city { get; set; }
 
         [Required, StringLength(100)]
+        [RegularExpression(@"^[A-Za-z\s/_-]+$", ErrorMessage = "Invalid timezone format")]
         public string timezone { get; set; }
 
         [Required, StringLength(50)]
+        [RegularExpression(@"^(Desktop|Mobile|Tablet)$", ErrorMessage = "Invalid device type")]
         public string device_type { get; set; }
 
         [Required, StringLength(50)]
+        [RegularExpression(@"^[A-Za-z\s]+$", ErrorMessage = "Invalid operating system")]
         public string operating_system { get; set; }
 
         [Required, StringLength(100)]
+        [RegularExpression(@"^[A-Za-z\s]+$", ErrorMessage = "Invalid browser name")]
         public string browser { get; set; }
 
         [Required, StringLength(500)]
-        public string user_agent { get; set; }
+        public string user_agent { get; set; } // usually complex, regex not practical
 
         [Required, StringLength(500)]
         [RegularExpression(@"^https?:\/\/[^\s]+$", ErrorMessage = "Invalid URL format")]
         public string page_url { get; set; }
 
         [StringLength(500)]
+        [RegularExpression(@"^https?:\/\/[^\s]+$", ErrorMessage = "Invalid referrer URL format")]
         public string referrer { get; set; }
+
 
         [Required]
         public DateTime visit_time { get; set; }
