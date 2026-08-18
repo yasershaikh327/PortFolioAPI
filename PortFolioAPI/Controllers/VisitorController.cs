@@ -37,7 +37,7 @@ namespace PortFolioAPI.Controllers
                 {
                     if (ModelState.IsValid)
                     {
-                        var VisitorDate = DateTime.Now;
+                        var VisitorDate = DateTime.UtcNow;
                         // Process visitor details here
                         var totalRecords = _repository.Add(viewerDto);
                         await _iNotificationService.SendNotification($"👀 Visitor Alert: Location 📍 {viewerDto.city}, {viewerDto.country_name}; Time 🕐 {VisitorDate.ToString("dd/MM/yyyy hh:mm tt")}; Browser 🌐 {viewerDto.browser}; OS 💻 {viewerDto.operating_system}");
