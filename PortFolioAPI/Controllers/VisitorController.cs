@@ -5,6 +5,7 @@ using DataAccess.Repositories;
 using DataAccess.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.RateLimiting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using PortFolioAPI.Models;
 
@@ -46,10 +47,15 @@ namespace PortFolioAPI.Controllers
                 }
                 return Ok(new { status = "Running on Localhost..." });
             }
+            catch (DbUpdateException ex)
+            {
+                _helper.LogError("An error occurred while processing the visitor request.", ex);
+                return Ok(new { DatabaseStatus = ex.Message });
+            }
             catch (Exception ex)
             {
                 _helper.LogError("An error occurred while processing the visitor request.", ex);
-                return Ok(new { status = ex.Message });
+                return Ok(new { MethodStatus = ex.Message });
             }
         }
     }
