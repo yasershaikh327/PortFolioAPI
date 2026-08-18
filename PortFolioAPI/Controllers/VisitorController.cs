@@ -17,15 +17,34 @@ namespace PortFolioAPI.Controllers
     public class VisitorController : ControllerBase
     {
         private readonly IRepository _repository;
-        private readonly INotificationService _iNotificationService;
         private readonly AppSettings _settings;
         private readonly IHelper _helper;
         public VisitorController(IRepository repository, INotificationService iNotificationService, IOptions<AppSettings> options, IHelper helper)
         {
             _repository = repository;
-            _iNotificationService = iNotificationService;
             _settings = options.Value;
             _helper = helper;
+        }
+
+        [Route("sum")]
+        public async Task<IActionResult> Sum()
+        {
+            try
+            {
+                int x = 8; int y = 0;
+                return Ok(x / y);
+            }
+            catch (Exception ex)
+            {
+                _helper.LogError("An error occurred while processing the sum request.", ex);
+                Console.Error.WriteLine("Invalid Divided Exception");
+
+                if (StatusCodes.Status500InternalServerError == 500)
+                {
+                    return Redirect("/Error/Error");
+                }
+            }
+           
         }
 
         [HttpPost]
@@ -41,13 +60,6 @@ namespace PortFolioAPI.Controllers
 
                         // Process visitor details here
                         var totalRecords = _repository.Add(viewerDto);
-
-                        await _iNotificationService.SendNotification(
-                            $"👀 Visitor Alert: Location 📍 {viewerDto.city}, {viewerDto.country_name}; " +
-                            $"Time 🕐 {VisitorDate.ToString("dd/MM/yyyy hh:mm tt")}; " +
-                            $"Browser 🌐 {viewerDto.browser}; OS 💻 {viewerDto.operating_system}"
-                        );
-
                         return Ok(new { status = "Thank You for Visiting!!!" });
 
                     }
@@ -61,16 +73,35 @@ namespace PortFolioAPI.Controllers
                 var deeperMessage = ex.InnerException?.InnerException?.Message;
 
                 _helper.LogError("Visitor request failed.", ex);
+                Console.Error.WriteLine(ex.ToString());
+                Console.Error.WriteLine(innerMessage.ToString());
+                Console.Error.WriteLine(deeperMessage.ToString());
 
-                return Ok(new
+                if (StatusCodes.Status500InternalServerError == 500)
                 {
-                    DatabaseStatus = $"{ex.Message} | Inner: {innerMessage} | Deeper: {deeperMessage}"
-                });
+                    return Redirect("/Error/Error");
+                }
+
+                //return Ok(new
+                //{
+                //    DatabaseStatus = $"{ex.Message} | Inner: {innerMessage} | Deeper: {deeperMessage}"
+                //});
              }
             catch (Exception ex)
             {
                 _helper.LogError("An error occurred while processing the visitor request.", ex);
-                return Ok(new { MethodStatus = ex.Message });
+                Console.Error.WriteLine(ex.ToString());
+
+                //return StatusCode(StatusCodes.Status500InternalServerError, new
+                //{
+                //    statusCode = 500,
+                //    message = "An internal server error occurred.",
+                //    MethodStatus = ex.Message
+                //});
+                if (StatusCodes.Status500InternalServerError == 500)
+                {
+                    return Redirect("/Error/Error");
+                }
             }
         }
     }

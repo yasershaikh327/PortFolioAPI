@@ -48,7 +48,7 @@ namespace PortFolioAPI.GlobalExceptionMiddleware
                     context.Response.StatusCode = 500;
                     context.Request.Path = "/Error/Error";
                     context.Request.QueryString = new QueryString("?statusCode=500");
-                    await _next(context);
+                    //await _next(context);
                     _helper.LogError("An error occurred while processing the request.", ex);
                 }
             }

@@ -11,11 +11,13 @@ namespace PortFolioAPI.Controllers
             _helper = helper;
         }
 
+        [HttpPost][HttpGet]
         [Route("Error/Error")]
-        public IActionResult Error(int statusCode = 500)
+        public IActionResult Error(int statusCode)
         {
             try
             {
+                statusCode = statusCode == 0 ? 500 : statusCode;
                 Response.StatusCode = statusCode;
                 _helper.LogError($"An error occurred while processing the request. Status Code: {statusCode}");
                 return View("Error", statusCode);

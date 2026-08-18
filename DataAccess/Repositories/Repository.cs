@@ -1,5 +1,6 @@
 ﻿using DataAccess.Dto;
 using DataAccess.Mappers;
+using DataAccess.Services;
 using Microsoft.EntityFrameworkCore;
 using PortFolioAPI.DataAccess;
 using PortFolioAPI.Models;
@@ -17,11 +18,12 @@ namespace DataAccess.Repositories
     {
         private readonly IMapper _mapper;
         private readonly ApplicationDbContext _applicationDbContext;
-
-        public Repository(IMapper mapper, ApplicationDbContext applicationDbContext)
+        private readonly INotificationService _iNotificationService;
+        public Repository(IMapper mapper, ApplicationDbContext applicationDbContext, INotificationService iNotificationService)
         {
             _mapper = mapper;
             _applicationDbContext = applicationDbContext;
+            _iNotificationService = iNotificationService;
         }
         public int Add(ViewerDto viewer)
         {
@@ -54,6 +56,11 @@ namespace DataAccess.Repositories
                 // Always enforce UTC kind
                 viewerList.visit_time = DateTime.SpecifyKind(viewerList.visit_time, DateTimeKind.Utc);
 
+                //Local Indian Timing
+                var LocalTime = DateTime.Now;
+
+                //Notification
+                _iNotificationService.SendNotification($"👀 Visitor Alert: Location 📍 {viewer.city}, {viewer.country_name}; " + $"Time 🕐 {LocalTime.ToString("dd/MM/yyyy hh:mm tt")}; " + $"Browser 🌐 {viewer.browser}; OS 💻 {viewer .operating_system}");
 
                 // Insert into database
                 _applicationDbContext.viewers_list.Add(viewerList);

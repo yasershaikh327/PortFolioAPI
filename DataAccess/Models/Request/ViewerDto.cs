@@ -48,9 +48,8 @@ namespace PortFolioAPI.Models
         public string page_url { get; set; }
 
         [StringLength(500)]
-        [RegularExpression(@"^https?:\/\/[^\s]+$", ErrorMessage = "Invalid referrer URL format")]
+        [RegularExpression(@"(^https?:\/\/[^\s]+$)|(^Direct Visit$)",ErrorMessage = "Invalid referrer format (must be a URL or 'Direct Visit')")]
         public string referrer { get; set; }
-
 
         [Required]
         public DateTime visit_time { get; set; }

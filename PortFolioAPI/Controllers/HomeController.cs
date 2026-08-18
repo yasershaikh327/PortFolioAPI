@@ -8,7 +8,6 @@ using System.Text;
 
 namespace PortFolioAPI.Controllers
 {
-    [EnableRateLimiting("public-api")]
     public class HomeController : Controller
     {
         public IActionResult Index()

@@ -74,7 +74,7 @@ app.UseStatusCodePagesWithReExecute("/Error/Error", "?statusCode={0}");
 
 app.UseRateLimiter();
 
-app.MapControllers().RequireRateLimiting("public-api");
+//app.MapControllers().RequireRateLimiting("public-api");
 
 app.MapControllerRoute(
     name: "default",

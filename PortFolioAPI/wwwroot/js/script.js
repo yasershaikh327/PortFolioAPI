@@ -276,7 +276,27 @@ async function sendVisitorDetails() {
 
             // IMPORTANT: check if response is OK before parsing JSON
             if (!response.ok) {
-                throw new Error(`Server error: ${response.status}`);
+                if (!response.ok && response.status === 429) {
+                    // Create a hidden form
+                    const form = document.createElement("form");
+                    form.method = "POST";
+                    form.action = origin + "/Error/Error";
+
+                    // Add hidden input for statusCode
+                    const input = document.createElement("input");
+                    input.type = "hidden";
+                    input.name = "statusCode";
+                    input.value = 429;
+
+                    form.appendChild(input);
+                    document.body.appendChild(form);
+
+                    // Submit the form (POST)
+                    form.submit();
+                }
+
+
+                console.error(`Server errorsss: ${response.status}`);
             }
 
             const result = await response.json();
@@ -286,6 +306,7 @@ async function sendVisitorDetails() {
         }
 
     } catch (error) {
+
         console.error('Error sending visitor details:', error);
     }
 }
