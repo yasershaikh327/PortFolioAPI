@@ -590,3 +590,7 @@ footer {
     margin-left: auto;
     margin-right: auto;
 }
+a {
+    text-decoration: auto;
+    color: black;
+}
