@@ -36,19 +36,24 @@ namespace DataAccess.Repositories
                     try
                     {
                         var tz = TimeZoneInfo.FindSystemTimeZoneById(viewerList.timezone);
-                        viewerList.visit_time = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, tz);
+                        var localTime = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, tz);
+
+                        // Ensure EF/Npgsql sees this as UTC
+                        viewerList.visit_time = DateTime.SpecifyKind(localTime, DateTimeKind.Utc);
                     }
                     catch (TimeZoneNotFoundException)
                     {
-                        // fallback to UTC if timezone is invalid
                         viewerList.visit_time = DateTime.UtcNow;
                     }
                 }
                 else
                 {
-                    // fallback to UTC if no timezone provided
                     viewerList.visit_time = DateTime.UtcNow;
                 }
+
+                // Always enforce UTC kind
+                viewerList.visit_time = DateTime.SpecifyKind(viewerList.visit_time, DateTimeKind.Utc);
+
 
                 // Insert into database
                 _applicationDbContext.viewers_list.Add(viewerList);
