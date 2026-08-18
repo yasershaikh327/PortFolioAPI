@@ -15,6 +15,11 @@ namespace PortFolioAPI.Controllers
         {
             return View();
         }
+        [Route("project-screenshots-iframe")]
+        public IActionResult ProjectScreenshotsIframe()
+        {
+            return View();
+        }
 
     }
 }
