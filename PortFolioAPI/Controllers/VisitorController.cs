@@ -41,7 +41,7 @@ namespace PortFolioAPI.Controllers
                         // Process visitor details here
                         var totalRecords = _repository.Add(viewerDto);
                         await _iNotificationService.SendNotification($"👀 Visitor Alert: Location 📍 {viewerDto.city}, {viewerDto.country_name}; Time 🕐 {VisitorDate.ToString("dd/MM/yyyy hh:mm tt")}; Browser 🌐 {viewerDto.browser}; OS 💻 {viewerDto.operating_system}");
-                        return Ok(new { status = "Visitor details received", totalRecords = 0 });
+                        return Ok(new { status = "Thank You for Visiting!!!" });
                     }
                     return Ok(new { status = "Something Went Wrong" });
                 }
