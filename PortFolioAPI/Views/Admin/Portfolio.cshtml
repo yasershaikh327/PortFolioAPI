@@ -1,0 +1,112 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Visitor Insights — Yaser Shaikh</title>
+    <link rel="stylesheet" href="~/css/style.css">
+    <script src="~/js/Visitors.js"></script>
+</head>
+<body class="vp-page">
+
+    <header class="vp-header">
+        <div class="vp-container">
+            <span class="vp-badge">Analytics</span>
+            <h1 class="vp-title">Visitor <span class="vp-title-accent">Insights</span></h1>
+            <p class="vp-subtitle">Who's stopping by the portfolio, and from where</p>
+            <span class="vp-status"><span class="vp-status-dot" id="statusDot"></span><span id="statusLabel">Connecting to data source…</span></span>
+        </div>
+    </header>
+
+    <main class="vp-container">
+
+        <!-- Summary stats -->
+        <section aria-label="Summary stats">
+            <div class="vp-stats-grid">
+                <div class="vp-stat-card">
+                    <div class="vp-stat-icon">👀</div>
+                    <div class="vp-stat-number" id="statTotal">–</div>
+                    <div class="vp-stat-label">Total Visits</div>
+                    <div class="vp-stat-sub" id="statTotalSub">&nbsp;</div>
+                </div>
+                <div class="vp-stat-card">
+                    <div class="vp-stat-icon">🌍</div>
+                    <div class="vp-stat-number" id="statCountries">–</div>
+                    <div class="vp-stat-label">Countries Reached</div>
+                    <div class="vp-stat-sub" id="statTopCountry">&nbsp;</div>
+                </div>
+                <div class="vp-stat-card">
+                    <div class="vp-stat-icon">📱</div>
+                    <div class="vp-stat-number" id="statDevice">–</div>
+                    <div class="vp-stat-label">Top Device</div>
+                    <div class="vp-stat-sub" id="statTopBrowser">&nbsp;</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Top sources -->
+        <section aria-label="Top referrers">
+            <h2 class="vp-section-title">Top Sources</h2>
+            <div class="vp-sources-card">
+                <div id="sourcesPills">
+                    <span class="vp-pill">Loading…</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Visitor log -->
+        <section aria-label="Visitor log">
+            <div class="vp-panel-head">
+                <h2 class="vp-section-title" style="margin-bottom:0;">Recent Visitors</h2>
+                <span class="vp-status" id="rowCountLabel"></span>
+            </div>
+
+            <div class="vp-filter-bar">
+                <input type="text" class="vp-filter-input" id="searchInput" placeholder="Search city, page, referrer…">
+                <select class="vp-filter-select" id="countryFilter">
+                    <option value="">All Countries</option>
+                </select>
+                <select class="vp-filter-select" id="deviceFilter">
+                    <option value="">All Devices</option>
+                </select>
+            </div>
+
+            <div class="vp-table-card">
+                <table class="vp-table">
+                    <thead>
+                        <tr>
+                            <th>Location</th>
+                            <th>Device</th>
+                            <th>Browser / OS</th>
+                            <th>Page</th>
+                            <th>Referrer</th>
+                            <th>Visit Time</th>
+                        </tr>
+                    </thead>
+                    <tbody id="visitorTableBody">
+                        <tr><td colspan="6"><div class="vp-loading">Loading visitor data…</div></td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="vp-pager">
+                <button class="vp-pager-btn" id="prevPage">← Prev</button>
+                <span class="vp-pager-label" id="pageLabel">Page 1</span>
+                <button class="vp-pager-btn" id="nextPage">Next →</button>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="vp-footer">
+        <div class="vp-container vp-footer-links">
+            <a href="https://yasershaikh327.github.io/MyPortFolio/">Portfolio</a>
+            <a href="https://github.com/yasershaikh327" target="_blank" rel="noopener">GitHub</a>
+            <a href="https://linkedin.com/in/yaser-shaikh-b0245614a" target="_blank" rel="noopener">LinkedIn</a>
+        </div>
+        <div class="vp-container">
+            <p class="vp-stat-sub">&copy; <span id="year"></span> Yaser Shaikh — Visitor Insights</p>
+        </div>
+    </footer>
+</body>
+</html>

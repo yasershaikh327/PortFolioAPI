@@ -1,6 +1,5 @@
-﻿using DataAccess.Dto;
+﻿using DataAccess.Model;
 using Microsoft.EntityFrameworkCore;
-using PortFolioAPI.Models;
 
 namespace PortFolioAPI.DataAccess
 {

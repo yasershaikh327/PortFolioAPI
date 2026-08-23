@@ -1,0 +1,54 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login — Yaser Shaikh</title>
+    <link rel="stylesheet" href="~/css/style.css">
+</head>
+<body class="lp-page">
+
+    <div class="lp-wrap">
+        <span class="lp-badge">Welcome back</span>
+        <h1 class="lp-title">Sign in to your <span class="lp-title-accent">Dashboard</span></h1>
+        <p class="lp-subtitle">Enter your credentials to continue</p>
+
+        <div class="lp-card">
+            <form id="loginForm" novalidate>
+                <div class="lp-field">
+                    <label class="lp-label" for="email">Email</label>
+                    <div class="lp-input-shell">
+                        <span class="lp-input-icon">✉️</span>
+                        <input class="lp-input" type="email" id="email" name="email" placeholder="you@example.com" autocomplete="email" required>
+                    </div>
+                    <div class="lp-field-error" id="emailError"></div>
+                </div>
+
+                <div class="lp-field">
+                    <label class="lp-label" for="password">Password</label>
+                    <div class="lp-input-shell">
+                        <span class="lp-input-icon">🔒</span>
+                        <input class="lp-input" type="password" id="password" name="password" placeholder="••••••••" autocomplete="current-password" required minlength="6">
+                        <button type="button" class="lp-toggle-visibility" id="togglePassword">Show</button>
+                    </div>
+                    <div class="lp-field-error" id="passwordError"></div>
+                </div>
+
+                <div class="lp-row">
+                    <label class="lp-remember">
+                        <input type="checkbox" class="lp-checkbox" id="remember">
+                        Remember me
+                    </label>
+                    <a class="lp-forgot" href="#">Forgot password?</a>
+                </div>
+
+                <button type="submit" class="lp-submit" id="submitBtn">Sign In</button>
+
+                <div class="lp-form-message" id="formMessage"></div>
+            </form>
+        </div>
+    </div>
+
+    <script src="~/js/Login.js"></script>
+</body>
+</html>

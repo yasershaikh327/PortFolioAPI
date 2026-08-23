@@ -1,29 +1,30 @@
-﻿using DataAccess.Dto;
+﻿using DataAccess.DtoModels.Response;
+using DataAccess.Helper;
 using DataAccess.Mappers;
+using DataAccess.Model;
+using DataAccess.Models;
 using DataAccess.Services;
 using Microsoft.EntityFrameworkCore;
 using PortFolioAPI.DataAccess;
-using PortFolioAPI.Models;
+using PortFolioAPI.DtoModels.Request;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace DataAccess.Repositories
 {
-    public interface IRepository
-    {
-        public int Add(ViewerDto viewer);
-    }
     public class Repository : IRepository
     {
         private readonly IMapper _mapper;
         private readonly ApplicationDbContext _applicationDbContext;
         private readonly INotificationService _iNotificationService;
-        public Repository(IMapper mapper, ApplicationDbContext applicationDbContext, INotificationService iNotificationService)
+        private readonly IHelper _helper;
+        public Repository(IMapper mapper, ApplicationDbContext applicationDbContext, INotificationService iNotificationService, IHelper helper)
         {
             _mapper = mapper;
             _applicationDbContext = applicationDbContext;
             _iNotificationService = iNotificationService;
+            _helper = helper;
         }
         public int Add(ViewerDto viewer)
         {
@@ -80,5 +81,49 @@ namespace DataAccess.Repositories
             }
         }
 
+        public List<VisitorsListResponse> GetVisitors()
+        {
+            var visitors = _applicationDbContext.viewers_list.ToList();
+
+            var visitorsResponse = new List<VisitorsListResponse>();
+
+            foreach (var visitObject in visitors)
+            {
+                visitorsResponse.Add(new VisitorsListResponse
+                {
+                    id = visitObject.id,
+                    country_code = visitObject.country_code,
+                    country_name = visitObject.country_name,
+                    city = visitObject.city,
+                    timezone = visitObject.timezone,
+                    device_type = visitObject.device_type,
+                    operating_system = visitObject.operating_system,
+                    browser = visitObject.browser,
+                    page_url = visitObject.page_url,
+                    referrer = visitObject.referrer,
+                    visit_time = _helper.ConvertUtcToIndiaTime(visitObject.visit_time) // your conversion helper
+                });
+            }
+
+            return visitorsResponse;
+        }
+
+
+        public bool Login(Login login)
+        {
+            try
+            {
+                if(login.Email == "syaser327@gmail.com" && login.Password == "Admin#789")
+                {
+                    return true;
+                }
+                return false;
+                
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+        }
     }
 }

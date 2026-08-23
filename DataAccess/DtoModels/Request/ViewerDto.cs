@@ -5,7 +5,7 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Web;
 
-namespace PortFolioAPI.Models
+namespace PortFolioAPI.DtoModels.Request
 {
     public class ViewerDto
     {

@@ -1,6 +1,7 @@
 using DataAccess.AppSettings;
 using DataAccess.Helper;
 using DataAccess.Mappers;
+using DataAccess.Middleware;
 using DataAccess.Repositories;
 using DataAccess.Services;
 using DotNetEnv;
@@ -19,6 +20,8 @@ using System.Threading.RateLimiting;
 Env.Load();
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.Configure<JwtSettings>(builder.Configuration.GetSection("JwtSettings"));
 
 // Configure Kestrel to listen on the Vercel port
 var port = Environment.GetEnvironmentVariable("PORT") ?? "80";
@@ -60,6 +63,24 @@ builder.Services.AddRateLimiter(options =>
 
 });
 
+builder.Services.Configure<JwtSettings>(builder.Configuration.GetSection("JwtSettings"));
+
+builder.Services.AddJwtAuthentication(builder.Configuration);
+
+builder.Services.AddAuthentication("Cookies")
+    .AddCookie("Cookies", options =>
+    {
+        options.LoginPath = "/Admin/Index";   // where unauthenticated users are redirected
+        options.AccessDeniedPath = "/Admin/Index"; // optional
+        options.ExpireTimeSpan = TimeSpan.FromHours(1);
+        options.SlidingExpiration = true;
+    });
+
+builder.Services.AddAuthorization();
+
+
+builder.Services.AddAuthorization();
+
 var app = builder.Build();
 
 app.UseMiddleware<GlobalExceptionMiddleware>();
@@ -69,6 +90,10 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
+
+app.UseAuthentication();
+
+app.UseAuthorization();
 
 app.UseStatusCodePagesWithReExecute("/Error/Error", "?statusCode={0}");
 

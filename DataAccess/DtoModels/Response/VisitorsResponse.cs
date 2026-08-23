@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace DataAccess.Dto
+namespace DataAccess.DtoModels.Response
 {
-    public class Viewer
+    public class VisitorsListResponse
     {
         public int id { get; set; }
         public string country_code { get; set; }
@@ -19,4 +19,6 @@ namespace DataAccess.Dto
         public string referrer { get; set; }
         public DateTime visit_time { get; set; }
     }
+   
+
 }

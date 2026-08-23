@@ -311,4 +311,3 @@ async function sendVisitorDetails() {
     }
 }
 window.addEventListener('load', sendVisitorDetails);
-
