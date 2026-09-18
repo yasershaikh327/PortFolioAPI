@@ -61,7 +61,7 @@ namespace DataAccess.Repositories
                 var LocalTime = DateTime.Now;
 
                 //Notification
-                _iNotificationService.SendNotification($"👀 Visitor Alert: Location 📍 {viewer.city}, {viewer.country_name}; " + $"Time 🕐 {LocalTime.ToString("dd/MM/yyyy hh:mm tt")}; " + $"Browser 🌐 {viewer.browser}; OS 💻 {viewer .operating_system}");
+                _iNotificationService.SendWhatsppMessageByTwilio($"👀 Visitor Alert: Location 📍 {viewer.city}, {viewer.country_name}; " + $"Time 🕐 {LocalTime.ToString("dd/MM/yyyy hh:mm tt")}; " + $"Browser 🌐 {viewer.browser}; OS 💻 {viewer .operating_system}");
 
                 // Insert into database
                 _applicationDbContext.viewers_list.Add(viewerList);

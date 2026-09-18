@@ -11,10 +11,19 @@ namespace DataAccess.Services
 {
     public interface INotificationService
     {
-        Task<string> SendNotification(string message);
+        Task<string> SendWhatsppMessageByTwilio(string message);
+        Task<string> FetchTwilioBalance();
     }
     public class NotificationService : INotificationService
     {
+        public Task<string> FetchTwilioBalance()
+        {
+            var accountSid = Environment.GetEnvironmentVariable("TWILIO_ACCOUNT_SID");
+            var authToken = Environment.GetEnvironmentVariable("TWILIO_AUTH_TOKEN");
+            var balance = Twilio.Rest.Api.V2010.Account.BalanceResource.Fetch();
+            return Task.FromResult($"{balance.Balance} {balance.Currency}");
+        }
+
         //public async Task<MessageResponse> SendNotification(string usermessage)
         //{
         //    // Implementation for sending notification
@@ -36,7 +45,7 @@ namespace DataAccess.Services
 
         //    return Response;
         //}
-        public Task<string> SendNotification(string message)
+        public Task<string> SendWhatsppMessageByTwilio(string message)
         {
             var accountSid = Environment.GetEnvironmentVariable("TWILIO_ACCOUNT_SID");
             var authToken = Environment.GetEnvironmentVariable("TWILIO_AUTH_TOKEN");

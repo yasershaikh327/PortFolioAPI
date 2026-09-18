@@ -38,7 +38,7 @@ namespace PortFolioAPI.Controllers
                     }
 
                     // Send SMS notification
-                    await _iNotificationService.SendNotification($"Hello {viewerDto.city}, Good Morning 🌞");
+                    await _iNotificationService.SendWhatsppMessageByTwilio($"Hello {viewerDto.city}, Good Morning 🌞");
 
                     // Set temporary cookie (expires in 24 hours)
                     Response.Cookies.Append("SmsSent", "true", new CookieOptions
