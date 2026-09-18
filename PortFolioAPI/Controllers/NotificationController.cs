@@ -29,9 +29,29 @@ namespace PortFolioAPI.Controllers
         {
             try
             {
-                // You can include userDetails info in the message if you want
-                await _iNotificationService.SendNotification($"Hello {viewerDto.city}, Good Morning 🌞");
-                return new JsonResult(new { status = "Notification sent" });
+                if (_settings.ISPROD == "YES")
+                {
+                    // Check if cookie exists
+                    if (Request.Cookies.ContainsKey("SmsSent"))
+                    {
+                        return new JsonResult(new { status = "Notification already sent recently" });
+                    }
+
+                    // Send SMS notification
+                    await _iNotificationService.SendNotification($"Hello {viewerDto.city}, Good Morning 🌞");
+
+                    // Set temporary cookie (expires in 24 hours)
+                    Response.Cookies.Append("SmsSent", "true", new CookieOptions
+                    {
+                        Expires = DateTimeOffset.UtcNow.AddHours(24),
+                        HttpOnly = true,
+                        Secure = true
+                    });
+
+                    return new JsonResult(new { status = "Notification sent" });
+                }
+
+                return Ok(new { status = "Running on Localhost..." });
             }
             catch (Exception ex)
             {
@@ -39,5 +59,6 @@ namespace PortFolioAPI.Controllers
                 throw new Exception(ex.Message);
             }
         }
+
     }
 }

@@ -53,7 +53,7 @@ namespace DataAccess.Services
 
             Console.WriteLine($"Message SID: {messageBody.Sid}");
             Console.WriteLine($"Status: {messageBody.Status}");
-            return Task.FromResult("Notification sent successfully");
+            return Task.FromResult(messageBody.Status.ToString());
         }
     }
 }
