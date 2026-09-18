@@ -29,6 +29,10 @@ builder.WebHost.UseUrls($"http://0.0.0.0:{port}");
 
 var connectionString = Environment.GetEnvironmentVariable("DEFAULTCONNECTION");
 string ISPROD = Environment.GetEnvironmentVariable("ISPROD");
+string TWILIO_ACCOUNT_SID = Environment.GetEnvironmentVariable("TWILIO_ACCOUNT_SID");
+string TWILIO_AUTH_TOKEN = Environment.GetEnvironmentVariable("TWILIO_AUTH_TOKEN");
+string TWILIO_SOURCE_PHONE_NUMBER = Environment.GetEnvironmentVariable("TWILIO_SOURCE_PHONE_NUMBER");
+string TWILIO_DESTINATION_PHONE_NUMBER = Environment.GetEnvironmentVariable("TWILIO_DESTINATION_PHONE_NUMBER");
 
 // Add MVC services
 builder.Services.AddControllersWithViews();
