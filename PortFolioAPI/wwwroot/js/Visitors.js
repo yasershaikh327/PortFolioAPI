@@ -285,3 +285,22 @@ if (document.readyState === "loading") {
 // }
 
 // getTwilioBalance();
+
+async function getBrevoEmailBalance() {
+    try {
+        const res = await fetch("/api/Notification/brevo-email-balance", {
+            headers: { "Accept": "application/json" }
+        });
+
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+
+        const { balance } = await res.json();
+        //console.log("Brevo Email Balance:", balance);
+        document.getElementById("brevo-email-balance").style="display: inline-block;color: red;font-weight: bolder;";
+        document.getElementById("brevo-email-balance").textContent="Brevo Email Balance: " + balance;
+    } catch (err) {
+        console.error("Failed to fetch Brevo email balance:", err.message);
+    }
+}
+
+getBrevoEmailBalance();

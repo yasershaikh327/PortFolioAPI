@@ -2,7 +2,9 @@
 using System;
 using System.Collections.Generic;
 using System.Net.Http.Headers;
+using System.Net.Http.Json;
 using System.Text;
+using System.Text.Json;
 using Twilio;
 using Twilio.Rest.Api.V2010.Account;
 using Twilio.Types;
@@ -11,11 +13,16 @@ namespace DataAccess.Services
 {
     public interface INotificationService
     {
+        Task<string> SendEmailByBrevo(string subject, string htmlContent, string textContent);
         Task<string> SendWhatsppMessageByTwilio(string message);
         Task<string> FetchTwilioBalance();
+        Task<string> GetBrevoEmailBalance();
+        Task<int> GetBrevoEmailBalanceAsync();
     }
     public class NotificationService : INotificationService
     {
+        private static readonly HttpClient _httpClient = new();
+
         public Task<string> FetchTwilioBalance()
         {
             var accountSid = Environment.GetEnvironmentVariable("TWILIO_ACCOUNT_SID");
@@ -23,6 +30,32 @@ namespace DataAccess.Services
             TwilioClient.Init(accountSid, authToken);
             var balance = Twilio.Rest.Api.V2010.Account.BalanceResource.Fetch();
             return Task.FromResult($"{balance.Balance} {balance.Currency}");
+        }
+
+        public async Task<string> SendEmailByBrevo(string subject, string htmlContent, string textContent)
+        {
+            var apiKey = Environment.GetEnvironmentVariable("BREVO_API_KEY");
+            var senderEmail = Environment.GetEnvironmentVariable("BREVO_SENDER_EMAIL");
+            var destinationEmail = Environment.GetEnvironmentVariable("BREVO_DESTINATION_EMAIL");
+
+            var request = new HttpRequestMessage(HttpMethod.Post, "https://api.brevo.com/v3/smtp/email");
+            request.Headers.Add("api-key", apiKey);
+            request.Content = JsonContent.Create(new
+            {
+                sender = new { name = "Portfolio Alerts", email = senderEmail },
+                to = new[] { new { email = destinationEmail } },
+                subject,
+                htmlContent,
+                textContent
+            });
+
+            var response = await _httpClient.SendAsync(request);
+            var responseBody = await response.Content.ReadAsStringAsync();
+
+            Console.WriteLine($"Status: {(int)response.StatusCode}");
+            Console.WriteLine($"Response: {responseBody}");
+
+            return response.IsSuccessStatusCode ? "Sent" : $"Failed: {responseBody}";
         }
 
         //public async Task<MessageResponse> SendNotification(string usermessage)
@@ -65,5 +98,66 @@ namespace DataAccess.Services
             Console.WriteLine($"Status: {messageBody.Status}");
             return Task.FromResult(messageBody.Status.ToString());
         }
+
+        public async Task<string> GetBrevoEmailBalance()
+        {
+            var apiKey = Environment.GetEnvironmentVariable("BREVO_API_KEY");
+
+            var request = new HttpRequestMessage(HttpMethod.Get, "https://api.brevo.com/v3/account");
+            request.Headers.Add("api-key", apiKey);
+            request.Headers.Add("accept", "application/json");
+
+            var response = await _httpClient.SendAsync(request);
+            var responseBody = await response.Content.ReadAsStringAsync();
+
+            if (!response.IsSuccessStatusCode)
+            {
+                Console.WriteLine($"Brevo account call failed: {(int)response.StatusCode} {responseBody}");
+                return $"Failed: {responseBody}";
+            }
+
+            using var doc = JsonDocument.Parse(responseBody);
+
+            if (!doc.RootElement.TryGetProperty("plan", out var plans))
+                return "No plan information returned.";
+
+            var lines = new List<string>();
+
+            foreach (var plan in plans.EnumerateArray())
+            {
+                var type = plan.TryGetProperty("type", out var t) ? t.GetString() : "unknown";
+                var creditsType = plan.TryGetProperty("creditsType", out var ct) ? ct.GetString() : "-";
+                var credits = plan.TryGetProperty("credits", out var c) ? c.GetDouble() : 0;
+
+                lines.Add($"{type} ({creditsType}): {credits}");
+            }
+
+            var result = string.Join(Environment.NewLine, lines);
+            Console.WriteLine(result);
+            return result;
+        }
+
+        public async Task<int> GetBrevoEmailBalanceAsync()
+        {
+            var apiKey = Environment.GetEnvironmentVariable("BREVO_API_KEY");
+
+            using var client = new HttpClient();
+            client.DefaultRequestHeaders.Add("api-key", apiKey);
+
+            var response = await client.GetStringAsync("https://api.brevo.com/v3/account");
+
+            using var doc = JsonDocument.Parse(response);
+
+            // Access the first item in the "plan" array
+            int credits = doc.RootElement
+                .GetProperty("plan")[0]
+                .GetProperty("credits")
+                .GetInt32();
+
+            return credits;
+
+
+        }
+
     }
-}
+    }

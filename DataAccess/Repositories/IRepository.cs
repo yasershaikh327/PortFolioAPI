@@ -9,7 +9,7 @@ namespace DataAccess.Repositories
 {
     public interface IRepository
     {
-        public int Add(ViewerDto viewer);
+        public Task<int> Add(ViewerDto viewer);
         public bool Login(Login login);
         public List<VisitorsListResponse> GetVisitors();
     }

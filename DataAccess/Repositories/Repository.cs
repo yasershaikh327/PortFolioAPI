@@ -4,6 +4,7 @@ using DataAccess.Mappers;
 using DataAccess.Model;
 using DataAccess.Models;
 using DataAccess.Services;
+using DataAccess.Templates;
 using Microsoft.EntityFrameworkCore;
 using PortFolioAPI.DataAccess;
 using PortFolioAPI.DtoModels.Request;
@@ -26,7 +27,7 @@ namespace DataAccess.Repositories
             _iNotificationService = iNotificationService;
             _helper = helper;
         }
-        public int Add(ViewerDto viewer)
+        public async Task<int> Add(ViewerDto viewer)
         {
             try
             {
@@ -61,7 +62,37 @@ namespace DataAccess.Repositories
                 var LocalTime = DateTime.Now;
 
                 //Notification
-                //_iNotificationService.SendWhatsppMessageByTwilio($"👀 Visitor Alert: Location 📍 {viewer.city}, {viewer.country_name}; " + $"Time 🕐 {LocalTime.ToString("dd/MM/yyyy hh:mm tt")}; " + $"Browser 🌐 {viewer.browser}; OS 💻 {viewer .operating_system}");
+                var buildVisitorAlertHtml = new BrevoMailTemplate();
+                var html = buildVisitorAlertHtml.BuildVisitorAlertHtml(viewer.city, viewer.country_name, LocalTime.ToString("yyyy-MM-dd HH:mm:ss"), viewer.browser, viewer.operating_system);
+
+                var text = $"👀 Visitor Alert: Location 📍 {viewer.city}, {viewer.country_name}; " +
+                           $"Time 🕐 {LocalTime}; Browser 🌐 {viewer.browser}; OS 💻 {viewer.operating_system}";
+
+                int balance = await _iNotificationService.GetBrevoEmailBalanceAsync();
+
+                if (balance <= 50)
+                {
+                    string htmlBody = $@"
+                        <div style='font-family:Arial, sans-serif; background-color:#f9f9f9; padding:20px; border:1px solid #ddd; border-radius:8px;'>
+                            <h1 style='color:#d9534f; text-align:center;'>⚠️ Low Balance Alert</h1>
+                            <p style='font-size:16px; color:#333; text-align:center;'>
+                                Your Brevo email credits are running low.<br/>
+                                <strong style='color:#d9534f;'>Remaining Credits: {balance}</strong>
+                            </p>
+                        </div>";
+
+                    string textBody = $"Low Balance Alert - Remaining Credits: {balance}";
+
+                    await _iNotificationService.SendEmailByBrevo(
+                        "👀 Visitor Alert",
+                        htmlBody,
+                        textBody
+                    );
+                }
+                else
+                {
+                    await _iNotificationService.SendEmailByBrevo("👀 Visitor Alert", html, text);
+                }
 
                 // Insert into database
                 _applicationDbContext.viewers_list.Add(viewerList);

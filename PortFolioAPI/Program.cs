@@ -33,6 +33,9 @@ string TWILIO_ACCOUNT_SID = Environment.GetEnvironmentVariable("TWILIO_ACCOUNT_S
 string TWILIO_AUTH_TOKEN = Environment.GetEnvironmentVariable("TWILIO_AUTH_TOKEN");
 string TWILIO_SOURCE_PHONE_NUMBER = Environment.GetEnvironmentVariable("TWILIO_SOURCE_PHONE_NUMBER");
 string TWILIO_DESTINATION_PHONE_NUMBER = Environment.GetEnvironmentVariable("TWILIO_DESTINATION_PHONE_NUMBER");
+string BREVO_API_KEY = Environment.GetEnvironmentVariable("BREVO_API_KEY");
+string BREVO_SENDER_EMAIL = Environment.GetEnvironmentVariable("BREVO_SENDER_EMAIL");
+string BREVO_DESTINATION_EMAIL = Environment.GetEnvironmentVariable("BREVO_DESTINATION_EMAIL");
 
 // Add MVC services
 builder.Services.AddControllersWithViews();

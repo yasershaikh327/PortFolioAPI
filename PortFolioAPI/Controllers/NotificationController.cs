@@ -60,17 +60,32 @@ namespace PortFolioAPI.Controllers
             }
         }
 
-        [HttpGet("twilio-balance")]
-        public async Task<IActionResult> FetchTwilioBalance()
+        //[HttpGet("twilio-balance")]
+        //public async Task<IActionResult> FetchTwilioBalance()
+        //{
+        //    try
+        //    {
+        //        var balance = await _iNotificationService.FetchTwilioBalance();
+        //        return Ok(new { balance });
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        _helper.LogError("An error occurred while fetching Twilio balance.", ex);
+        //        return StatusCode(500, new { error = ex.Message });
+        //    }
+        //}
+
+        [HttpGet("brevo-email-balance")]
+        public async Task<IActionResult> GetBrevoEmailBalance()
         {
             try
             {
-                var balance = await _iNotificationService.FetchTwilioBalance();
+                var balance = await _iNotificationService.GetBrevoEmailBalance();
                 return Ok(new { balance });
             }
             catch (Exception ex)
             {
-                _helper.LogError("An error occurred while fetching Twilio balance.", ex);
+                _helper.LogError("An error occurred while fetching Brevo email balance.", ex);
                 return StatusCode(500, new { error = ex.Message });
             }
         }
