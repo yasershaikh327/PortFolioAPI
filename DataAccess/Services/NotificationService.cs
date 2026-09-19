@@ -1,4 +1,8 @@
-﻿using DataAccess.Models.Response;
+﻿using DataAccess.Model;
+using DataAccess.Models.Response;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
+using PortFolioAPI.DataAccess;
 using System;
 using System.Collections.Generic;
 using System.Net.Http.Headers;
@@ -22,6 +26,12 @@ namespace DataAccess.Services
     public class NotificationService : INotificationService
     {
         private static readonly HttpClient _httpClient = new();
+        private readonly IServiceScopeFactory _scopeFactory;
+
+        public NotificationService(IServiceScopeFactory scopeFactory)
+        {
+            _scopeFactory = scopeFactory;
+        }
 
         public Task<string> FetchTwilioBalance()
         {
@@ -38,25 +48,83 @@ namespace DataAccess.Services
             var senderEmail = Environment.GetEnvironmentVariable("BREVO_SENDER_EMAIL");
             var destinationEmail = Environment.GetEnvironmentVariable("BREVO_DESTINATION_EMAIL");
 
-            var request = new HttpRequestMessage(HttpMethod.Post, "https://api.brevo.com/v3/smtp/email");
-            request.Headers.Add("api-key", apiKey);
-            request.Content = JsonContent.Create(new
+            try
             {
-                sender = new { name = "Portfolio Alerts", email = senderEmail },
-                to = new[] { new { email = destinationEmail } },
-                subject,
-                htmlContent,
-                textContent
-            });
+                var request = new HttpRequestMessage(HttpMethod.Post, "https://api.brevo.com/v3/smtp/email");
+                request.Headers.Add("api-key", apiKey);
+                request.Content = JsonContent.Create(new
+                {
+                    sender = new { name = "Portfolio Alerts", email = senderEmail },
+                    to = new[] { new { email = destinationEmail } },
+                    subject,
+                    htmlContent,
+                    textContent
+                });
 
-            var response = await _httpClient.SendAsync(request);
-            var responseBody = await response.Content.ReadAsStringAsync();
+                var response = await _httpClient.SendAsync(request);
+                var responseBody = await response.Content.ReadAsStringAsync();
 
-            Console.WriteLine($"Status: {(int)response.StatusCode}");
-            Console.WriteLine($"Response: {responseBody}");
+                Console.WriteLine($"Status: {(int)response.StatusCode}");
+                Console.WriteLine($"Response: {responseBody}");
 
-            return response.IsSuccessStatusCode ? "Sent" : $"Failed: {responseBody}";
+                // Save log entry
+                var log = new BrevoMailLogs
+                {
+                    subject = subject,
+                    htmlContent = htmlContent,
+                    textContent = textContent,
+                    senderEmail = senderEmail,
+                    destinationEmail = destinationEmail,
+                    StatusCode = (int)response.StatusCode,
+                    ResponseBody = responseBody,
+                    ErrorMessage = response.IsSuccessStatusCode ? null : "Brevo API returned error",
+                    CreatedAt = DateTime.UtcNow
+                };
+
+                // Example: using EF Core
+                await SaveMailLog(log);
+
+                return response.IsSuccessStatusCode ? "Sent" : $"Failed: {responseBody}";
+            }
+            catch (Exception ex)
+            {
+                Console.Error.WriteLine($"Brevo Email Exception: {ex}");
+
+                var log = new BrevoMailLogs
+                {
+                    subject = subject,
+                    htmlContent = htmlContent,
+                    textContent = textContent,
+                    senderEmail = senderEmail,
+                    destinationEmail = destinationEmail,
+                    StatusCode = 0, // no response
+                    ResponseBody = null,
+                    ErrorMessage = ex.Message,
+                    CreatedAt = DateTime.UtcNow
+                };
+
+                await SaveMailLog(log);
+
+                return $"Error: {ex.Message}";
+            }
         }
+
+        private async Task SaveMailLog(BrevoMailLogs log)
+        {
+            try
+            {
+                using var scope = _scopeFactory.CreateScope();
+                var dbContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+
+                dbContext.brevo_mail_logs.Add(log);
+                await dbContext.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                Console.Error.WriteLine($"Mail log save failed: {ex.Message}");
+            }
+        }
+
 
         //public async Task<MessageResponse> SendNotification(string usermessage)
         //{
