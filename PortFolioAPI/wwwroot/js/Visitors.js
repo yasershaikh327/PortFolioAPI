@@ -267,21 +267,21 @@ if (document.readyState === "loading") {
     initVisitorPage();
 }
 
-async function getTwilioBalance() {
-    try {
-        const res = await fetch("/api/Notification/twilio-balance", {
-            headers: { "Accept": "application/json" }
-        });
+// async function getTwilioBalance() {
+//     try {
+//         const res = await fetch("/api/Notification/twilio-balance", {
+//             headers: { "Accept": "application/json" }
+//         });
 
-        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+//         if (!res.ok) throw new Error(`HTTP ${res.status}`);
 
-        const { balance } = await res.json();
-        //console.log("Twilio Balance:", balance);
-        document.getElementById("twilio-balance").style="display: inline-block;color: red;font-weight: bolder;";
-        document.getElementById("twilio-balance").textContent="Twilio Balance: " + balance;
-    } catch (err) {
-        console.error("Failed to fetch Twilio balance:", err.message);
-    }
-}
+//         const { balance } = await res.json();
+//         //console.log("Twilio Balance:", balance);
+//         document.getElementById("twilio-balance").style="display: inline-block;color: red;font-weight: bolder;";
+//         document.getElementById("twilio-balance").textContent="Twilio Balance: " + balance;
+//     } catch (err) {
+//         console.error("Failed to fetch Twilio balance:", err.message);
+//     }
+// }
 
-getTwilioBalance();
+// getTwilioBalance();
