@@ -60,5 +60,20 @@ namespace PortFolioAPI.Controllers
             }
         }
 
+        [HttpGet("twilio-balance")]
+        public async Task<IActionResult> FetchTwilioBalance()
+        {
+            try
+            {
+                var balance = await _iNotificationService.FetchTwilioBalance();
+                return Ok(new { balance });
+            }
+            catch (Exception ex)
+            {
+                _helper.LogError("An error occurred while fetching Twilio balance.", ex);
+                return StatusCode(500, new { error = ex.Message });
+            }
+        }
+
     }
 }

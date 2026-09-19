@@ -1,5 +1,6 @@
 ﻿//Visitors Scripts
 const API_URL = "/visitors"; // <-- set to your real endpoint, e.g. "https://port-folio-api-one.vercel.app/api/visitors"
+const API_URL2 = "/twilio-balance"; 
 const PAGE_SIZE = 10;
 
 // Sample data — trimmed, de-identified-enough snapshot mirroring your CSV,
@@ -265,3 +266,22 @@ if (document.readyState === "loading") {
 } else {
     initVisitorPage();
 }
+
+async function getTwilioBalance() {
+    try {
+        const res = await fetch("/api/Notification/twilio-balance", {
+            headers: { "Accept": "application/json" }
+        });
+
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+
+        const { balance } = await res.json();
+        //console.log("Twilio Balance:", balance);
+        document.getElementById("twilio-balance").style="color: red;font-weight: bolder;";
+        document.getElementById("twilio-balance").textContent="Twilio Balance: " + balance;
+    } catch (err) {
+        console.error("Failed to fetch Twilio balance:", err.message);
+    }
+}
+
+getTwilioBalance();

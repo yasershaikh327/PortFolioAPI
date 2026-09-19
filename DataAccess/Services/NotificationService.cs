@@ -20,6 +20,7 @@ namespace DataAccess.Services
         {
             var accountSid = Environment.GetEnvironmentVariable("TWILIO_ACCOUNT_SID");
             var authToken = Environment.GetEnvironmentVariable("TWILIO_AUTH_TOKEN");
+            TwilioClient.Init(accountSid, authToken);
             var balance = Twilio.Rest.Api.V2010.Account.BalanceResource.Fetch();
             return Task.FromResult($"{balance.Balance} {balance.Currency}");
         }
