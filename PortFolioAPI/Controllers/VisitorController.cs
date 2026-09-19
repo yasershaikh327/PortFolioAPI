@@ -19,11 +19,13 @@ namespace PortFolioAPI.Controllers
         private readonly IRepository _repository;
         private readonly AppSettings _settings;
         private readonly IHelper _helper;
+        private readonly INotificationService _iNotificationService;
         public VisitorController(IRepository repository, INotificationService iNotificationService, IOptions<AppSettings> options, IHelper helper)
         {
             _repository = repository;
             _settings = options.Value;
             _helper = helper;
+            _iNotificationService = iNotificationService;
         }
 
         [Route("sum")]
@@ -75,7 +77,13 @@ namespace PortFolioAPI.Controllers
                             Secure = true
                         });
 
-                        return Ok(new { status = "Thank You for Visiting!!!" });
+                        var notificationResult = await _iNotificationService.SendEmailByBrevo(
+                        "👀 Visitor Alert",
+                        "Test {0}" + DateTime.UtcNow,
+                        "Test" + DateTime.UtcNow
+                    );
+
+                        return Ok(new { status = "Thank You for Visiting!!!", mailstatus = notificationResult });
                     }
 
                     return Ok(new { status = "Something Went Wrong" });
