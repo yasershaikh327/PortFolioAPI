@@ -277,7 +277,7 @@ async function getTwilioBalance() {
 
         const { balance } = await res.json();
         //console.log("Twilio Balance:", balance);
-        document.getElementById("twilio-balance").style="color: red;font-weight: bolder;";
+        document.getElementById("twilio-balance").style="display: inline-block;color: red;font-weight: bolder;";
         document.getElementById("twilio-balance").textContent="Twilio Balance: " + balance;
     } catch (err) {
         console.error("Failed to fetch Twilio balance:", err.message);
