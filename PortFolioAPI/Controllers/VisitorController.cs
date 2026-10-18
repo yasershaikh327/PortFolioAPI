@@ -75,7 +75,7 @@ namespace PortFolioAPI.Controllers
                         //    Secure = true
                         //});
 
-                        return Ok(new { status = "Thank You for Visiting!!!" });
+                        return Ok(new { status = "Thank You for Visiting!!!", totalVisitors = totalRecords });
                     }
 
                     return Ok(new { status = "Something Went Wrong" });
