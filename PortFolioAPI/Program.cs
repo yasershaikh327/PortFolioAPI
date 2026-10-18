@@ -83,14 +83,6 @@ builder.Services.AddAuthentication("Cookies")
         options.SlidingExpiration = true;
     });
 
-builder.Services.AddSession(options =>
-{
-    options.IdleTimeout = TimeSpan.FromMinutes(30); // session timeout
-    options.Cookie.HttpOnly = true;
-    options.Cookie.IsEssential = true;
-});
-
-
 builder.Services.AddAuthorization();
 
 var app = builder.Build();
@@ -108,8 +100,6 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.UseStatusCodePagesWithReExecute("/Error/Error", "?statusCode={0}");
-
-app.UseSession();
 
 app.UseRateLimiter();
 

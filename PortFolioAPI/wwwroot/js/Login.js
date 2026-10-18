@@ -100,16 +100,16 @@ async function handleSubmit(e) {
             // Store however your app expects — e.g. a cookie set by the server,
             // or sessionStorage if you don't need it to persist across tabs.
             sessionStorage.setItem("jwtToken", data.token);
+            localStorage.setItem("jwtToken", data.token);
         }
         if (data.token && data.token !== "") {
-            await fetch('/Admin/SetToken', {
+           await fetch('/Admin/SetToken', {
                 method: 'POST',
                 headers: {
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${localStorage.getItem("jwtToken")}`
                 },
-                body: JSON.stringify({
-                    token: data.token
-                })
+                body: JSON.stringify({ token: data.token })
             });
 
             window.location.href = '/Admin/Portfolio';
