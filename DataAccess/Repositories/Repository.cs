@@ -59,7 +59,7 @@ namespace DataAccess.Repositories
                 viewerList.visit_time = DateTime.SpecifyKind(viewerList.visit_time, DateTimeKind.Utc);
 
                 //Local Indian Timing
-                var LocalTime = DateTime.Now;
+                var LocalTime = DateTime.UtcNow;
 
                 //Notification
                 var buildVisitorAlertHtml = new BrevoMailTemplate();

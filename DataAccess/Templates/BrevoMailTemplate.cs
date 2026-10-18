@@ -10,7 +10,7 @@ namespace DataAccess.Templates
         public string BuildVisitorAlertHtml(string city, string country, string time, string browser, string os)
         {
             var location = $"{Encode(city)}, {Encode(country)}";
-            DateTime dt = DateTime.Parse("2026-09-19 21:21:11");
+            DateTime dt = DateTime.Parse(time);
             string formattedTime = dt.ToString("dd MMMM, yyyy hh:mm tt");
             // Output: "19 September, 2026 09:21 PM"
 
