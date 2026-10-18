@@ -6,7 +6,6 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace PortFolioAPI.Controllers
 {
@@ -14,6 +13,7 @@ namespace PortFolioAPI.Controllers
     {
         private readonly IRepository _repository;
         private readonly IHelper _helper;
+
         public AdminController(IRepository repository, IHelper helper)
         {
             _repository = repository;
@@ -78,11 +78,40 @@ namespace PortFolioAPI.Controllers
             }
         }
 
+        // ✅ New endpoint to accept token from frontend
+        [AllowAnonymous]
+        [HttpPost("/Admin/SetToken")]
+        public IActionResult SetToken([FromBody] TokenRequest request)
+        {
+            if (string.IsNullOrEmpty(request?.Token))
+            {
+                return BadRequest(new { message = "Token is required" });
+            }
+
+            // Store token in session (or DB/cache if needed)
+            HttpContext.Session.SetString("jwtToken", request.Token);
+
+            return Ok(new { message = "Token stored successfully" });
+        }
+
         [Authorize]
         [HttpGet]
         public IActionResult Portfolio()
         {
+            // Optional: validate token from session
+            var token = HttpContext.Session.GetString("jwtToken");
+            if (string.IsNullOrEmpty(token))
+            {
+                return Unauthorized();
+            }
+
             return View();
         }
+    }
+
+    // DTO for SetToken
+    public class TokenRequest
+    {
+        public string Token { get; set; }
     }
 }
