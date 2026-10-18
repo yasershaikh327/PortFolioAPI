@@ -57,10 +57,10 @@ namespace PortFolioAPI.Controllers
                     if (ModelState.IsValid)
                     {
                         // Check if cookie exists
-                        if (Request.Cookies.ContainsKey("VisitorRecorded"))
-                        {
-                            return Ok(new { status = "Visitor already recorded recently" });
-                        }
+                        //if (Request.Cookies.ContainsKey("VisitorRecorded"))
+                        //{
+                        //    return Ok(new { status = "Visitor already recorded recently" });
+                        //}
 
                         var VisitorDate = DateTime.UtcNow;
 
@@ -68,12 +68,12 @@ namespace PortFolioAPI.Controllers
                         var totalRecords = _repository.Add(viewerDto);
 
                         // Set temporary cookie (expires in 24 hours)
-                        Response.Cookies.Append("VisitorRecorded", "true", new CookieOptions
-                        {
-                            Expires = DateTimeOffset.UtcNow.AddHours(24),
-                            HttpOnly = true,
-                            Secure = true
-                        });
+                        //Response.Cookies.Append("VisitorRecorded", "true", new CookieOptions
+                        //{
+                        //    Expires = DateTimeOffset.UtcNow.AddHours(24),
+                        //    HttpOnly = true,
+                        //    Secure = true
+                        //});
 
                         return Ok(new { status = "Thank You for Visiting!!!" });
                     }
